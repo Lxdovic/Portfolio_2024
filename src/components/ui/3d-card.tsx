@@ -17,10 +17,11 @@ export const CardContainer = ({
   children,
   className,
   containerClassName,
+  rotationStrength = 25,
 }: {
   children?: React.ReactNode
   className?: string
-
+  rotationStrength?: number
   containerClassName?: string
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -35,8 +36,8 @@ export const CardContainer = ({
 
     const {left, top, width, height} =
       containerRef.current.getBoundingClientRect()
-    const x = (e.clientX - left - width / 2) / 25
-    const y = (e.clientY - top - height / 2) / 25
+    const x = (e.clientX - left - width / 2) / (101 - rotationStrength)
+    const y = (e.clientY - top - height / 2) / (101 - rotationStrength)
     containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`
   }
 

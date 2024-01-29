@@ -7,7 +7,7 @@ export default function Home() {
     <main className="flex flex-col">
       <Navbar />
 
-      <div className="flex h-screen">
+      <div className="flex h-screen border-b">
         <div className="w-1/5 shrink-0"></div>
         <div className="flex w-4/5 border-l">
           <div
