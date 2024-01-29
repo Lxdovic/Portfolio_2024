@@ -1,6 +1,6 @@
-import Sphere from '@/components/r3f/sphere'
+import Sphere from '@/components/sphere'
 import {Navbar} from '@/features/navbar'
-import {ThreeDCardDemo} from '@/features/hover-card'
+import {ProjectCard} from '@/features/project-card'
 
 export default function Home() {
   return (
@@ -33,7 +33,7 @@ export default function Home() {
       </div>
 
       <div className="flex h-screen justify-center">
-        <ThreeDCardDemo />
+        <ProjectCard />
       </div>
     </main>
   )
