@@ -3,6 +3,7 @@
 import {Canvas, useFrame} from '@react-three/fiber'
 import * as THREE from 'three'
 import {useRef} from 'react'
+import {Stats} from '@react-three/drei'
 const SphereContainer = () => {
   return (
     <Canvas
@@ -35,12 +36,14 @@ const Sphere = () => {
   const colors: any = useRef([])
   const currentPoint: any = useRef(new THREE.Vector3(0, 0, 0))
   const currentMouse: any = useRef(new THREE.Vector2(0, 0))
+  const target: any = useRef(new THREE.Vector3(0, 0, 0))
 
   useFrame((state) => {
     if (!mesh.current) return
     if (!positions.current) return
     if (!colors.current) return
     if (!currentPoint.current) return
+    if (!target.current) return
 
     state.camera.position.x =
       -4 + currentMouse.current.lerp(state.pointer, 0.03).x * 2
@@ -61,7 +64,7 @@ const Sphere = () => {
       0.1
     )
 
-    const total = Math.PI * 31.4159265359
+    const total = Math.PI * 20
     const radius = 3
 
     for (let i = 0; i < total; i++) {
@@ -72,39 +75,43 @@ const Sphere = () => {
         const animatedRadius = radius + Math.sin(lon * 15 + elapsed * 2) * 0.1
         const animatedLat = lat + elapsed * 0.1
 
-        let x = animatedRadius * Math.sin(lon) * Math.cos(animatedLat)
-        let y = animatedRadius * Math.sin(lon) * Math.sin(animatedLat)
-        let z = animatedRadius * Math.cos(lon)
+        target.current.x =
+          animatedRadius * Math.sin(lon) * Math.cos(animatedLat)
+        target.current.y =
+          animatedRadius * Math.sin(lon) * Math.sin(animatedLat)
+        target.current.z = animatedRadius * Math.cos(lon)
 
         const index = i * Math.round(total) + j
-        const [baseX, baseY, baseZ] = positions.current[index] || [0, 0, 0]
-        let target = new THREE.Vector3(x, y, z)
+        const position = new THREE.Vector3(
+          ...(positions.current[index] || [0, 0, 0])
+        )
 
-        const distance = currentPoint.current.distanceTo(target)
+        const distance = currentPoint.current.distanceTo(target.current)
 
         if (distance < 1.4 && state.pointer.x !== 0 && state.pointer.y !== 0) {
-          target = new THREE.Vector3(
+          target.current.x =
             (animatedRadius + 1.4 - distance) *
-              Math.sin(lon) *
-              Math.cos(animatedLat),
+            Math.sin(lon) *
+            Math.cos(animatedLat)
+
+          target.current.y =
             (animatedRadius + 1.4 - distance) *
-              Math.sin(lon) *
-              Math.sin(animatedLat),
-            (animatedRadius + 1.4 - distance) * Math.cos(lon)
-          )
+            Math.sin(lon) *
+            Math.sin(animatedLat)
+
+          target.current.z = (animatedRadius + 1.4 - distance) * Math.cos(lon)
         }
 
-        let lerped = new THREE.Vector3(baseX, baseY, baseZ).lerp(target, 0.1)
-
+        const finalPos = position.lerp(target.current, 0.1)
         const color = new THREE.Color(
           `hsl(${THREE.MathUtils.clamp(
-            360 - currentPoint.current.distanceTo(target) * 30,
+            360 - currentPoint.current.distanceTo(target.current) * 30,
             240,
             300
           )}, 100%, 50%)`
         )
 
-        positions.current[index] = [lerped.x, lerped.y, lerped.z]
+        positions.current[index] = [finalPos.x, finalPos.y, finalPos.z]
         colors.current[index] = [color.r, color.g, color.b]
       }
     }
@@ -135,7 +142,7 @@ const Sphere = () => {
         type="Points">
         <bufferGeometry ref={geometry} />
         <pointsMaterial
-          size={0.02}
+          size={0.03}
           vertexColors
         />
       </points>
