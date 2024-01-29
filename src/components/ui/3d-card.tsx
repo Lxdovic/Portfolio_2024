@@ -29,8 +29,8 @@ export const CardContainer = ({
   const lastMouseMove = useRef(performance.now())
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return
-    if (performance.now() - lastMouseMove.current < 30) return
+    if (!containerRef.current || performance.now() - lastMouseMove.current < 30)
+      return
 
     lastMouseMove.current = performance.now()
 
