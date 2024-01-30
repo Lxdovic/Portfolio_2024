@@ -1,3 +1,5 @@
+'use client'
+
 import React, {useEffect, useRef, useState} from 'react'
 import {AnimatePresence, motion} from 'framer-motion'
 import {projects} from '@/data/projects'
@@ -108,9 +110,7 @@ const Projects = () => {
               currentProject === index ? offsetWidth : 0
 
             const xPos: number =
-              typeof window === 'undefined'
-                ? 0
-                : window.innerWidth / 2 -
+              window.innerWidth / 2 -
                   smallWidth / 2 +
                   smallWidth * index -
                   smallWidth * currentProject -
