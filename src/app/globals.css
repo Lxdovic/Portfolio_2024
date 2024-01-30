@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "chatime";
+  src: url("../assets/fonts/chatime.otf");
+}
  
 @layer base {
   :root {

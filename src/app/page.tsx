@@ -1,6 +1,8 @@
+'use client'
+
 import Sphere from '@/components/sphere'
 import {Navbar} from '@/features/navbar'
-import {ProjectCard} from '@/features/project-card'
+import Projects from '@/features/projects'
 
 export default function Home() {
   return (
@@ -32,9 +34,11 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex h-screen justify-center">
-        <ProjectCard />
-      </div>
+      {/*<div className="flex h-screen justify-center">*/}
+      {/*  /!*<ProjectCard />*!/*/}
+      {/*</div>*/}
+
+      <Projects />
     </main>
   )
 }
