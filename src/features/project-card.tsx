@@ -18,11 +18,12 @@ export function ProjectCard() {
         <CardItem
           as="p"
           translateZ="60"
+          rotateZ={-100}
           className="mt-2 max-w-sm text-sm text-neutral-500 dark:text-neutral-300">
           Hover over this card to unleash the power of CSS perspective
         </CardItem>
         <CardItem
-          translateZ="100"
+          translateZ="0"
           className="mt-4 w-full">
           <Image
             src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

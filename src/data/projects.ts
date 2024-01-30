@@ -17,26 +17,28 @@ export const projects: Project[] = [
     href: '/projects/chess-challenge',
     image: chessChallenge,
     description:
-      'My implementation of a chess bot for Sebastian Lague’s Chess Challenge.',
+      'My submission to a coding challenge hosted by Sebastian Lague. I was given a chess framework and had to implement a chess bot on top of it. My bot ended top 63 out of 600+ submissions.',
   },
   {
     title: 'Chess Engine',
     href: '/projects/chess-engine',
     image: chessEngine,
     description:
-      'A bitboard chess engine made from scratch with no external libraries.',
+      'A chess engine I built from scratch. Utilizing many chess engine techniques such as bitboards, magic bitboards, negamax, alpha-beta pruning, quiescence search, transposition tables, null move pruning, and more.',
   },
   {
     title: 'IRC App',
     href: '/projects/irc-app',
     image: ircApp,
-    description: 'An Internet Relay Chat (IRC) app.',
+    description:
+      'An Internet Relay Chat (IRC) app built using websockets. It has features like private messaging channels, user authentication, guests, images and gifs, emojis and more.',
   },
   {
     title: 'Pathfinder',
     href: '/projects/pathfinder',
     image: pathfinder,
-    description: 'A* algorithm pathfinding visualizer.',
+    description:
+      'My implementation of the A* algorithm along with a Three.js scene for visualization.',
   },
   {
     title: 'This website',
@@ -48,7 +50,7 @@ export const projects: Project[] = [
   {
     title: 'More',
     href: 'https://github.com/Lxdovic',
-
+    image: chessChallenge,
     description: 'more of my projects can be found on my GitHub profile.',
   },
 ]
