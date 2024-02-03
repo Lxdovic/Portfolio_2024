@@ -3,6 +3,7 @@
 import Sphere from '@/components/sphere'
 import {Navbar} from '@/features/navbar'
 import Projects from '@/features/projects'
+import About from '@/features/about'
 
 export default function Home() {
   return (
@@ -24,7 +25,9 @@ export default function Home() {
           />
           <div className="pointer-events-none absolute top-0 z-10 flex h-full items-center p-6">
             <h1 className="flex flex-col gap-2">
-              <span className="text-5xl font-bold text-primary">Software</span>
+              <span className="font-['chatime'] text-5xl font-bold text-primary">
+                Software
+              </span>
               <span className="text-8xl font-bold uppercase">Engineer</span>
               <span>Ludovic Debever</span>
             </h1>
@@ -34,9 +37,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/*<div className="flex h-screen justify-center">*/}
-      {/*  /!*<ProjectCard />*!/*/}
-      {/*</div>*/}
+      <About />
 
       <Projects />
     </main>
