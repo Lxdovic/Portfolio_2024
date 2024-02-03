@@ -6,6 +6,7 @@ import {projects} from '@/data/projects'
 import Image from 'next/image'
 import {CardBody, CardContainer, CardItem} from '@/components/ui/3d-card'
 import {Button} from '@/components/ui/button'
+import {cn} from '@/lib/utils'
 // import { MouseContext, TMouseContext } from "../../context/MouseContext";
 // import ProjectsIndicators from "../../components/Projects/ProjectsIndicators";
 // import CurrentProjectDescription from "../../components/Projects/CurrentProjectDescription";
@@ -13,6 +14,7 @@ import {Button} from '@/components/ui/button'
 const Projects = () => {
   const [smallWidth, setSmallWidth] = useState<number>(200)
   const [bigWidth, setBigWidth] = useState<number>(700)
+  const [hydrationLoad, setHydrationLoad] = useState(true)
   const [currentProject, setCurrentProject] = useState<number>(
     Math.floor(projects.length / 2)
   )
@@ -83,11 +85,17 @@ const Projects = () => {
     return () => window.removeEventListener('resize', () => {})
   }, [])
 
+  useEffect(() => {
+    setHydrationLoad(false)
+  }, [])
+
+  if (hydrationLoad) return null
+
   return (
     <div
       id="work"
       className="relative flex h-screen flex-col overflow-hidden bg-background">
-      <h1 className="border-t border-white/20 px-80 py-10 pt-32 text-center text-7xl font-bold text-white">
+      <h1 className="px-80 py-10 pt-32 text-center text-7xl font-bold text-white">
         <span className="font-['chatime'] font-normal text-primary">
           Selected
         </span>{' '}
@@ -111,12 +119,12 @@ const Projects = () => {
 
             const xPos: number =
               window.innerWidth / 2 -
-                  smallWidth / 2 +
-                  smallWidth * index -
-                  smallWidth * currentProject -
-                  offsetCenterImage +
-                  offsetRightImages -
-                  offsetLeftImages
+              smallWidth / 2 +
+              smallWidth * index -
+              smallWidth * currentProject -
+              offsetCenterImage +
+              offsetRightImages -
+              offsetLeftImages
 
             const isCurrentProject: boolean = currentProject === index
 
@@ -161,7 +169,13 @@ const Projects = () => {
                 <CardContainer
                   className="inter-var"
                   rotationStrength={80}>
-                  <CardBody className="group/card relative h-full w-full rounded-xl border p-6">
+                  <CardBody
+                    className={cn(
+                      'group/card relative h-full w-full rounded-xl p-6 transition-shadow',
+                      isCurrentProject
+                        ? 'hover:shadow-[0px_0px_100px_0px_#7424FF33]'
+                        : ''
+                    )}>
                     <CardItem
                       translateZ="50"
                       className="w-full overflow-hidden text-5xl font-bold text-neutral-600 dark:text-white">
@@ -221,7 +235,7 @@ const Projects = () => {
                         }}>
                         <Button
                           variant="outline"
-                          className="bg-black/20">
+                          className="border-white/40 bg-black/20">
                           View {'->'}
                         </Button>
                       </motion.div>

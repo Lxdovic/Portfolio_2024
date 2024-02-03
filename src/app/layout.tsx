@@ -17,11 +17,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      suppressHydrationWarning>
       <head>
         <title>Portfolio</title>
       </head>
-      <body className={fontSans.className}>
+      <body
+        className={fontSans.className}
+        suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

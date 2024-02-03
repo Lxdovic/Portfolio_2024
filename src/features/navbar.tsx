@@ -90,17 +90,17 @@ const NavItems = () => {
                 </li>
                 <ListItem
                   href="/about#one"
-                  title="Introduction">
+                  title="One">
                   One
                 </ListItem>
                 <ListItem
                   href="/about#two"
-                  title="Installation">
+                  title="Two">
                   Two
                 </ListItem>
                 <ListItem
                   href="/about#three"
-                  title="Typography">
+                  title="Three">
                   Three
                 </ListItem>
               </ul>
