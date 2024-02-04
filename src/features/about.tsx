@@ -2,25 +2,7 @@
 
 import React from 'react'
 import {StickyScroll} from '@/components/ui/sticky-scroll-reveal'
-
-const content = [
-  {
-    title: 'Title',
-    description: 'description',
-  },
-  {
-    title: 'Title',
-    description: 'description',
-  },
-  {
-    title: 'Title',
-    description: 'description',
-  },
-  {
-    title: 'Title',
-    description: 'description',
-  },
-]
+import {about} from '@/data/about'
 
 const About = () => {
   return (
@@ -30,7 +12,7 @@ const About = () => {
         me
       </h2>
 
-      <StickyScroll content={content} />
+      <StickyScroll content={about} />
     </div>
   )
 }
