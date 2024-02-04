@@ -18,6 +18,7 @@ import {
 import {AnimatePresence, motion} from 'framer-motion'
 import {projects} from '@/data/projects'
 import profilePicture from '@/assets/images/pfp.jpeg'
+import {about} from '@/data/about'
 
 export function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0)
@@ -67,7 +68,7 @@ const NavItems = () => {
             <NavigationMenuTrigger>About</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                <li className="row-span-3">
+                <li className="row-span-2">
                   <NavigationMenuLink asChild>
                     <a
                       className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
@@ -88,21 +89,14 @@ const NavItems = () => {
                     </a>
                   </NavigationMenuLink>
                 </li>
-                <ListItem
-                  href="/about#one"
-                  title="One">
-                  One
-                </ListItem>
-                <ListItem
-                  href="/about#two"
-                  title="Two">
-                  Two
-                </ListItem>
-                <ListItem
-                  href="/about#three"
-                  title="Three">
-                  Three
-                </ListItem>
+                {about.map((content) => (
+                  <ListItem
+                    key={content.title}
+                    href={`/about#${content.title.toLowerCase()}`}
+                    title={content.title}>
+                    {content.description}
+                  </ListItem>
+                ))}
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
