@@ -64,6 +64,14 @@ const config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       keyframes: {
+        'radar-spin': {
+          from: {
+            transform: 'rotate(20deg)',
+          },
+          to: {
+            transform: 'rotate(380deg)',
+          },
+        },
         meteor: {
           '0%': {transform: 'rotate(215deg) translateX(0)', opacity: '1'},
           '70%': {opacity: '1'},
@@ -82,6 +90,7 @@ const config = {
         },
       },
       animation: {
+        'radar-spin': 'radar-spin 10s linear infinite',
         'meteor-effect': 'meteor 5s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
