@@ -29,7 +29,7 @@ export const CardContainer = ({
   const lastMouseMove = useRef(performance.now())
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current || performance.now() - lastMouseMove.current < 30)
+    if (!containerRef.current || performance.now() - lastMouseMove.current < 50)
       return
 
     lastMouseMove.current = performance.now()
@@ -51,6 +51,7 @@ export const CardContainer = ({
     setIsMouseEntered(false)
     containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`
   }
+
   return (
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
       <div
@@ -67,7 +68,7 @@ export const CardContainer = ({
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           className={cn(
-            'relative flex h-full w-full items-center justify-center transition-all duration-200 ease-linear',
+            'relative flex h-full w-full items-center justify-center transition-all duration-500 ease-linear-out',
             className
           )}
           style={{
