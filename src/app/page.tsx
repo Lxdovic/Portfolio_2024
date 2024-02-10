@@ -4,6 +4,7 @@ import Sphere from '@/components/sphere'
 import {Navbar} from '@/features/navbar'
 import Projects from '@/features/projects'
 import About from '@/features/about'
+import Footer from '@/features/footer'
 
 export default function Home() {
   return (
@@ -40,6 +41,8 @@ export default function Home() {
       <About />
 
       <Projects />
+
+      <Footer />
     </main>
   )
 }

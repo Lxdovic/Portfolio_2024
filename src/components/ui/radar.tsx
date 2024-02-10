@@ -11,12 +11,15 @@ export const Radar = ({className}: any) => {
         'relative flex h-20 w-20 items-center justify-center rounded-full',
         className
       )}>
+      <p className="absolute top-0 z-10 w-max uppercase text-white/60">
+        Skills set
+      </p>
       <div
         style={{
           transformOrigin: 'right center',
         }}
-        className="animate-radar-spin absolute right-1/2 top-1/2 z-40 flex
-        h-[5px] w-[400px] items-end justify-center overflow-hidden bg-transparent">
+        className="absolute right-1/2 top-1/2 z-40 flex h-[5px]
+        w-[400px] animate-radar-spin items-end justify-center overflow-hidden bg-transparent">
         {/* Radar line that rotates */}
         <div className="relative z-40 h-[1px] w-full bg-gradient-to-r from-transparent via-primary to-transparent" />
       </div>
