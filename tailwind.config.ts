@@ -20,6 +20,9 @@ const config = {
       },
     },
     extend: {
+      transitionTimingFunction: {
+        'linear-out': 'cubic-bezier(.17,.33,.51,1)',
+      },
       colors: {
         fontFamily: {
           sans: ['var(--font-sans)', ...fontFamily.sans] as any,
