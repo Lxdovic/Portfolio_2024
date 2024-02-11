@@ -17,8 +17,8 @@ import {
 } from '@/components/ui/navigation-menu'
 import {AnimatePresence, motion} from 'framer-motion'
 import {projects} from '@/data/projects'
-import profilePicture from '@/assets/images/pfp.jpeg'
 import {about} from '@/data/about'
+import profilePicture from '@/assets/images/pfp.jpeg'
 
 export function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0)
