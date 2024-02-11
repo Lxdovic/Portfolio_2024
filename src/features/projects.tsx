@@ -152,6 +152,7 @@ const Projects = () => {
                   y: Math.sin(index - currentProject) * 75,
                   x: xPos,
                   width,
+                  zIndex: isCurrentProject ? 100 : 0,
                   transition: {
                     duration: 1,
                     ease: [0.85, 0, 0.25, 1],
