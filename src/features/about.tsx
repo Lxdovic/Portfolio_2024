@@ -23,7 +23,9 @@ const FlexBadge = ({children, icon}: IFlexBadge) => (
 
 const About = () => {
   return (
-    <div className="relative border-b">
+    <div
+      id="about"
+      className="relative border-b">
       <Meteors
         number={60}
         className="z-0"
