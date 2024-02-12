@@ -28,8 +28,8 @@ export default function Home() {
             <h1 className="flex flex-col justify-center gap-2 p-10 font-['AlmarenaDisplayBold'] text-[6.5rem] font-semibold uppercase leading-[5rem]">
               <span>Student &</span>
               <span>Half-Time</span>
-              <span className="indent-10 text-primary">Software</span>
-              <span className="indent-10">Engineer</span>
+              <span className="indent-20 text-primary">Software</span>
+              <span className="indent-20">Engineer</span>
             </h1>
           </div>
 

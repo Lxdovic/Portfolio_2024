@@ -39,22 +39,13 @@ const About = () => {
       </div>
 
       <div className="relative flex h-96 w-full flex-col items-center justify-center space-y-4 overflow-hidden px-4">
-        <p className="max-w-lg text-white/80">
-          {"Hey, I'm Ludovic Debever, a software enginner in the making, currently studying computer science at Epitech" +
-            " Paris. I'm also working half-time for Holis, a SaaS startup based at Station F. I'm passionate about" +
-            ' programming, design and I also like chess a lot.'}
-        </p>
-
-        <p className="max-w-lg text-white/80">
-          {'I am a very curious person and I am always looking for new challenges. ' +
-            "I'm also a lot into algorithms and data structures. "}
-        </p>
-
-        <p className="max-w-lg text-white/80">
-          {
-            'My core strength is my passion for learning and my ability to adapt to new environments and technologies.'
-          }
-        </p>
+        <h3 className="flex flex-col font-['AlmarenaDisplayBold'] text-7xl font-bold uppercase leading-[4rem]">
+          <span>Crafting</span>
+          <span className="indent-20">digital experiences</span>
+          <span className="indent-10">and solving</span>
+          <span> problems</span>
+          <span className="indent-10">is what I do best</span>
+        </h3>
       </div>
 
       <div className="relative flex h-96 w-full flex-col items-center justify-center space-y-4 overflow-hidden px-4">
