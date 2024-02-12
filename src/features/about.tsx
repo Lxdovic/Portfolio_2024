@@ -6,6 +6,7 @@ import {Meteors} from '@/components/ui/meteors'
 import {IconContainer} from '@/components/ui/icon-container'
 import {Badge} from '@/components/ui/badge'
 import {Icon} from '@iconify/react'
+import AnimatedText from '@/components/animated-text'
 
 interface IFlexBadge {
   children: React.ReactNode
@@ -23,7 +24,7 @@ const FlexBadge = ({children, icon}: IFlexBadge) => (
 
 const About = () => {
   return (
-    <div
+    <section
       id="about"
       className="relative border-b">
       <Meteors
@@ -32,19 +33,35 @@ const About = () => {
       />
 
       <div className="flex w-full justify-center">
-        <h2 className="relative z-10 flex w-[24rem] flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-8xl font-bold uppercase text-white">
-          <span className="text-start text-primary">About</span>
-          <span className="text-end">Me</span>
+        <h2 className="relative z-10 flex w-[24rem] flex-col pt-32 font-['AlmarenaDisplayBold'] text-8xl font-bold uppercase text-white">
+          <AnimatedText className="text-start text-primary">About</AnimatedText>
+          <AnimatedText
+            delay={0.1}
+            className="text-end">
+            Me
+          </AnimatedText>
         </h2>
       </div>
 
       <div className="relative flex h-96 w-full flex-col items-center justify-center space-y-4 overflow-hidden px-4">
-        <h3 className="flex flex-col font-['AlmarenaDisplayBold'] text-7xl font-bold uppercase leading-[4rem]">
-          <span>Crafting</span>
-          <span className="indent-20">digital experiences</span>
-          <span className="indent-10">and solving</span>
-          <span> problems</span>
-          <span className="indent-10">is what I do best</span>
+        <h3 className="flex flex-col font-['AlmarenaDisplayBold'] text-7xl uppercase leading-[3.4rem]">
+          <AnimatedText>Crafting</AnimatedText>
+          <AnimatedText
+            delay={0.1}
+            className="ml-20">
+            digital experiences
+          </AnimatedText>
+          <AnimatedText
+            delay={0.1}
+            className="ml-10">
+            and solving
+          </AnimatedText>
+          <AnimatedText delay={0.1}> problems</AnimatedText>
+          <AnimatedText
+            delay={0.1}
+            className="ml-10">
+            is what I do best
+          </AnimatedText>
         </h3>
       </div>
 
@@ -175,7 +192,7 @@ const About = () => {
 
         <Radar className="absolute -bottom-12" />
       </div>
-    </div>
+    </section>
   )
 }
 
