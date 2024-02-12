@@ -94,12 +94,10 @@ const Projects = () => {
   return (
     <div
       id="work"
-      className="relative flex h-screen flex-col overflow-hidden bg-background">
-      <h1 className="px-80 py-10 pt-32 text-center text-7xl font-bold text-white">
-        <span className="font-['chatime'] font-normal text-primary">
-          Selected
-        </span>{' '}
-        work
+      className="relative flex h-screen flex-col items-center overflow-hidden bg-background">
+      <h1 className="flex w-[36rem] flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-8xl font-bold uppercase text-white">
+        <span className="text-start text-primary">Selected</span>
+        <span className="text-end">work</span>
       </h1>
 
       <motion.div className="h-1/2 w-full">
@@ -183,7 +181,7 @@ const Projects = () => {
                       <AnimatePresence>
                         <motion.h2
                           key={'projectTitle' + index}
-                          className="z-10 truncate text-clip text-[4.2rem] font-extrabold uppercase leading-tight tracking-tight text-white drop-shadow-xl"
+                          className="z-10 truncate text-clip font-['AlmarenaDisplayBold'] text-[4.2rem] font-extrabold uppercase leading-tight tracking-tight text-white drop-shadow-xl"
                           initial={{opacity: 0}}
                           animate={{
                             opacity: isCurrentProject ? 1 : 0,

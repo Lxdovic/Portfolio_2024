@@ -7,6 +7,27 @@
   src: url("../assets/fonts/chatime.otf");
 }
 
+@font-face {
+  font-family: Almarena;
+  src: url("../assets/fonts/Almarena-Almarena.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AlmarenaDisplayBold;
+  src: url("../assets/fonts/Almarena-Almarena-Display-Bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AlmarenaDisplayLight;
+  src: url("../assets/fonts/Almarena-Almarena-Display-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AlmarenaDisplayRegular;
+  src: url("../assets/fonts/Almarena-Almarena-Display-Regular.otf") format("opentype");
+}
+
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

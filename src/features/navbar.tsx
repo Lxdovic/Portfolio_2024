@@ -13,7 +13,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
 import {AnimatePresence, motion} from 'framer-motion'
 import {projects} from '@/data/projects'
@@ -52,6 +51,12 @@ const NavItems = () => {
       animate={{y: 0, opacity: 1, transition: {ease: 'easeInOut'}}}
       exit={{opacity: 0}}
       className="fixed top-0 z-50 flex h-12 w-full justify-center">
+      <Link
+        href="#home"
+        className="absolute left-6 mr-auto flex h-12 items-center font-['AlmarenaDisplayBold'] uppercase">
+        Ludovic Debever
+      </Link>
+
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -59,13 +64,15 @@ const NavItems = () => {
               href="/#home"
               legacyBehavior
               passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              <NavigationMenuLink className="px-4 py-2 text-xs uppercase">
                 Home
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>About</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="text-xs uppercase">
+              About
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                 <li className="row-span-3">
@@ -101,7 +108,9 @@ const NavItems = () => {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Work</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="text-xs uppercase">
+              Work
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                 {projects.map((component) => (

@@ -31,10 +31,12 @@ const About = () => {
         className="z-0"
       />
 
-      <h2 className="relative z-10 px-80 py-10 pt-32 text-center text-7xl font-bold text-white">
-        <span className="font-['chatime'] font-normal text-primary">About</span>{' '}
-        me
-      </h2>
+      <div className="flex w-full justify-center">
+        <h2 className="relative z-10 flex w-[24rem] flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-8xl font-bold uppercase text-white">
+          <span className="text-start text-primary">About</span>
+          <span className="text-end">Me</span>
+        </h2>
+      </div>
 
       <div className="relative flex h-96 w-full flex-col items-center justify-center space-y-4 overflow-hidden px-4">
         <p className="max-w-lg text-white/80">
