@@ -1,11 +1,18 @@
 'use client'
+
 import React from 'react'
 import {twMerge} from 'tailwind-merge'
 import {motion} from 'framer-motion'
 
-export const Radar = ({className}: any) => {
+interface IRadar {
+  className?: string
+  inView?: boolean
+}
+
+export const Radar = ({className, inView}: IRadar) => {
   const circles = new Array(8).fill(1)
-  return (
+
+  return inView ? (
     <div
       className={twMerge(
         'relative flex h-20 w-20 items-center justify-center rounded-full',
@@ -24,19 +31,21 @@ export const Radar = ({className}: any) => {
         <div className="relative z-40 h-[1px] w-full bg-gradient-to-r from-transparent via-primary to-transparent" />
       </div>
       {/* concentric circles */}
-      {circles.map((circle, idx) => (
-        <Circle
-          style={{
-            height: `${(idx + 1) * 5}rem`,
-            width: `${(idx + 1) * 5}rem`,
-            border: `1px solid rgba(71, 85, 105, ${1 - (idx + 1) * 0.1})`,
-          }}
-          key={`motion-${idx}`}
-          idx={idx}
-        />
-      ))}
+      {circles.map((circle, idx) => {
+        return (
+          <Circle
+            style={{
+              height: `${(idx + 1) * 5}rem`,
+              width: `${(idx + 1) * 5}rem`,
+              border: `1px solid rgba(71, 85, 105, ${1 - (idx + 1) * 0.1})`,
+            }}
+            key={`motion-${idx}`}
+            idx={idx}
+          />
+        )
+      })}
     </div>
-  )
+  ) : null
 }
 
 {
