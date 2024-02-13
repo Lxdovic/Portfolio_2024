@@ -7,6 +7,7 @@ import Image from 'next/image'
 import {CardBody, CardContainer, CardItem} from '@/components/ui/3d-card'
 import {Button} from '@/components/ui/button'
 import {cn} from '@/lib/utils'
+import AnimatedText from '@/components/animated-text'
 // import { MouseContext, TMouseContext } from "../../context/MouseContext";
 // import ProjectsIndicators from "../../components/Projects/ProjectsIndicators";
 // import CurrentProjectDescription from "../../components/Projects/CurrentProjectDescription";
@@ -92,12 +93,18 @@ const Projects = () => {
   if (hydrationLoad) return null
 
   return (
-    <div
+    <section
       id="work"
       className="relative flex h-screen flex-col items-center overflow-hidden bg-background">
       <h1 className="flex w-[36rem] flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-8xl font-bold uppercase text-white">
-        <span className="text-start text-primary">Selected</span>
-        <span className="text-end">work</span>
+        <AnimatedText className="text-start text-primary">
+          Selected
+        </AnimatedText>
+        <AnimatedText
+          delay={0.1}
+          className="text-end">
+          work
+        </AnimatedText>
       </h1>
 
       <motion.div className="h-1/2 w-full">
@@ -257,7 +264,7 @@ const Projects = () => {
           })}
         </div>
       </motion.div>
-    </div>
+    </section>
   )
 }
 

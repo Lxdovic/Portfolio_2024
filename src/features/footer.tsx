@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const Footer = () => {
   return (
-    <div className="flex h-max flex-col items-center justify-center gap-10 border-t px-64 py-20">
+    <footer className="flex h-max flex-col items-center justify-center gap-10 border-t px-64 py-20">
       <div className="flex h-max w-max gap-6">
         <Image
           className="h-20 w-20 rounded-full"
@@ -32,7 +32,7 @@ const Footer = () => {
           <Link href="https://github.com/Lxdovic">Github</Link>
         </li>
       </ul>
-    </div>
+    </footer>
   )
 }
 
