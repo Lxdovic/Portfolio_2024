@@ -9,7 +9,7 @@ const Footer = () => {
         <Image
           className="h-20 w-20 rounded-full"
           src={profilePicture}
-          alt="profile picture"
+          alt="Ludovic Debever"
         />
 
         <div className="flex flex-col justify-center">

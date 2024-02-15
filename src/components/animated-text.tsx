@@ -24,11 +24,15 @@ const AnimatedText = ({children, className, delay = 0}: IAnimatedText) => {
       className={cn('inline overflow-hidden py-1', className)}>
       {fragments.map((fragment, index) => {
         const variants = {
-          visible: {opacity: 1, y: 0, skewX: 0},
+          visible: {
+            opacity: 1,
+            y: 0,
+            rotateZ: 0,
+          },
           hidden: {
             opacity: 0,
             y: '100%',
-            skewX: -40,
+            rotateZ: 15,
             transition: {duration: 0},
           },
         }
@@ -40,7 +44,11 @@ const AnimatedText = ({children, className, delay = 0}: IAnimatedText) => {
             animate={controls}
             initial="hidden"
             variants={variants}
-            transition={{delay: delay + index * 0.02, duration: 0.3}}>
+            transition={{
+              delay: delay + index * 0.02,
+              duration: 0.4,
+              ease: [0.18, 0.49, 0.42, 0.99],
+            }}>
             {fragment}
           </motion.span>
         )

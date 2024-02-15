@@ -20,12 +20,12 @@ const Home = () => {
         {/*  className="h-52 self-center"*/}
         {/*/>*/}
         <div className="pointer-events-none absolute left-0 top-0 z-10 flex h-full p-6">
-          <h1 className="flex flex-col justify-center gap-2 p-10 font-['AlmarenaDisplayBold'] text-[6.5rem] font-semibold uppercase leading-[5rem]">
+          <h1 className="flex flex-col justify-center gap-2 p-10 font-['AlmarenaDisplayBold'] text-[6.5rem] font-semibold uppercase leading-[5.5rem]">
             <AnimatedText>Student &</AnimatedText>
             <AnimatedText delay={0.1}>Half-Time</AnimatedText>
             <AnimatedText
               delay={0.2}
-              className="ml-20 text-primary">
+              className="ml-20">
               Software
             </AnimatedText>
             <AnimatedText
