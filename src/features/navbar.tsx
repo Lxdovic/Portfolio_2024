@@ -52,6 +52,7 @@ const NavItems = () => {
       exit={{opacity: 0}}
       className="fixed top-0 z-50 flex h-12 w-full justify-center">
       <Link
+        tabIndex={0}
         href="#home"
         className="absolute left-6 mr-auto flex h-12 items-center font-['AlmarenaDisplayBold'] uppercase">
         Ludovic Debever
@@ -61,6 +62,7 @@ const NavItems = () => {
         <NavigationMenuList>
           <NavigationMenuItem>
             <Link
+              tabIndex={1}
               href="/#home"
               legacyBehavior
               passHref>
@@ -69,7 +71,7 @@ const NavItems = () => {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
-          <NavigationMenuItem>
+          <NavigationMenuItem tabIndex={2}>
             <NavigationMenuTrigger className="text-xs uppercase">
               About
             </NavigationMenuTrigger>
@@ -85,7 +87,7 @@ const NavItems = () => {
                         width="80"
                         className="rounded-full"
                         src={profilePicture}
-                        alt="avatar"
+                        alt="Ludovic Debever"
                       />
                       <div className="mb-2 mt-4 text-lg font-medium">
                         Ludovic Debever

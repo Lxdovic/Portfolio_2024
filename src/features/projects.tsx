@@ -254,7 +254,7 @@ const Projects = () => {
                         height="1000"
                         width="1000"
                         className="cover h-full w-full rounded-xl object-cover group-hover/card:shadow-xl"
-                        alt="thumbnail"
+                        alt={project.alt}
                       />
                     </CardItem>
                   </CardBody>
