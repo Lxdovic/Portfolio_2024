@@ -5,11 +5,7 @@ import React from 'react'
 import {Icon} from '@iconify/react'
 import {twMerge} from 'tailwind-merge'
 import {motion} from 'framer-motion'
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card'
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover'
 
 interface IIconContainerProps {
   icon: string
@@ -25,8 +21,8 @@ export const IconContainer = ({
   children,
 }: IIconContainerProps) => {
   return (
-    <HoverCard openDelay={100}>
-      <HoverCardTrigger>
+    <Popover>
+      <PopoverTrigger>
         <motion.div
           initial={{
             opacity: 0,
@@ -56,11 +52,11 @@ export const IconContainer = ({
             </div>
           </div>
         </motion.div>
-      </HoverCardTrigger>
+      </PopoverTrigger>
 
-      <HoverCardContent className="relative !z-30 w-80">
+      <PopoverContent className="relative !z-30 w-80">
         {children}
-      </HoverCardContent>
-    </HoverCard>
+      </PopoverContent>
+    </Popover>
   )
 }

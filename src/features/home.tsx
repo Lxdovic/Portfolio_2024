@@ -6,31 +6,21 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="relative flex h-screen border-b">
-      <div className="w-1/5 shrink-0"></div>
-      <div className="flex w-4/5 border-l">
-        {/*<div*/}
-        {/*  style={{*/}
-        {/*    borderWidth: '3px',*/}
-        {/*    borderLeftStyle: 'solid',*/}
-        {/*    borderRightStyle: 'none',*/}
-        {/*    borderImage:*/}
-        {/*      'linear-gradient(to bottom, #00000000, #7424ff, rgba(0, 0, 0, 0)) 1 100%',*/}
-        {/*  }}*/}
-        {/*  className="h-52 self-center"*/}
-        {/*/>*/}
-        <div className="pointer-events-none absolute left-0 top-0 z-10 flex h-full p-6">
-          <h1 className="flex flex-col justify-center gap-2 p-10 font-['AlmarenaDisplayBold'] text-[6.5rem] font-semibold uppercase leading-[5.5rem]">
+      className="relative flex h-screen w-full border-b">
+      <div className="hidden w-1/5 shrink-0 lg:flex"></div>
+      <div className="flex w-full border-l lg:w-4/5">
+        <div className="pointer-events-none absolute left-0 top-0 z-10 flex h-full w-full p-6">
+          <h1 className="flex w-full flex-col items-center justify-center gap-2 p-4 font-['AlmarenaDisplayBold'] text-[3rem] font-semibold uppercase leading-[2.5rem] md:p-10 md:text-[5rem] md:leading-[4.5rem] lg:items-start lg:text-[6.5rem] lg:leading-[5.5rem]">
             <AnimatedText>Student &</AnimatedText>
             <AnimatedText delay={0.1}>Half-Time</AnimatedText>
             <AnimatedText
               delay={0.2}
-              className="ml-20">
+              className="md:ml-20">
               Software
             </AnimatedText>
             <AnimatedText
               delay={0.3}
-              className="ml-20">
+              className="md:ml-20">
               Engineer
             </AnimatedText>
           </h1>

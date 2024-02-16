@@ -8,9 +8,6 @@ import {CardBody, CardContainer, CardItem} from '@/components/ui/3d-card'
 import {Button} from '@/components/ui/button'
 import {cn} from '@/lib/utils'
 import AnimatedText from '@/components/animated-text'
-// import { MouseContext, TMouseContext } from "../../context/MouseContext";
-// import ProjectsIndicators from "../../components/Projects/ProjectsIndicators";
-// import CurrentProjectDescription from "../../components/Projects/CurrentProjectDescription";
 
 const Projects = () => {
   const [smallWidth, setSmallWidth] = useState<number>(200)
@@ -20,9 +17,6 @@ const Projects = () => {
     Math.floor(projects.length / 2)
   )
   const containerRef = useRef<HTMLDivElement | null>(null)
-
-  // const { setMouseContent, setMouseProps, setDisableCursor } =
-  //     useContext<TMouseContext>(MouseContext);
 
   const handleClickProject = (
     index: number,
@@ -34,42 +28,7 @@ const Projects = () => {
       setTimeout(() => {
         window.scrollTo(0, 0)
       }, 800)
-
-      handleMouseLeaveProject()
-      // return navigate(project.link);
     }
-
-    // setMouseContent(<Icon icon="carbon:view-filled" height={30} />);
-    // setDisableCursor(true);
-    // setMouseProps({ color: "white", size: 60 });
-  }
-
-  const handleMouseEnterProject = (index: number) => {
-    if (index === currentProject) {
-      // setMouseContent(<Icon icon="carbon:view-filled" height={30} />);
-      // setDisableCursor(true);
-      // setMouseProps({ color: "white", size: 60 });
-
-      return
-    }
-
-    // setMouseContent(
-    //     <Icon
-    //         icon="ic:twotone-arrow-left"
-    //         height={30}
-    //         style={{
-    //             transform: `rotate(${index > currentProject && 180}deg)`,
-    //         }}
-    //     />,
-    // );
-    // setDisableCursor(true);
-    // setMouseProps({ color: "white", size: 40 });
-  }
-
-  const handleMouseLeaveProject = () => {
-    // setMouseContent("");
-    // setDisableCursor(false);
-    // setMouseProps({ color: "white", size: 10 });
   }
 
   const handleResize = () => {
@@ -96,7 +55,7 @@ const Projects = () => {
     <section
       id="work"
       className="relative flex h-screen flex-col items-center overflow-hidden bg-background">
-      <h1 className="flex w-[36rem] flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-8xl font-bold uppercase text-white">
+      <h1 className="flex flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-[3rem] font-bold uppercase leading-[3rem] text-white sm:w-[28rem] sm:text-7xl lg:w-[36rem]  lg:text-8xl">
         <AnimatedText className="text-start text-primary">
           Selected
         </AnimatedText>
@@ -137,8 +96,6 @@ const Projects = () => {
               <motion.div
                 key={index + 'project'}
                 onClick={() => handleClickProject(index, project)}
-                onMouseEnter={() => handleMouseEnterProject(index)}
-                onMouseLeave={handleMouseLeaveProject}
                 className="absolute h-full px-2"
                 initial={{
                   y: Math.sin(index - currentProject) * 75,
@@ -180,7 +137,7 @@ const Projects = () => {
                       'group/card relative h-full w-full rounded-xl p-6 transition-shadow',
                       isCurrentProject
                         ? 'hover:shadow-[0px_0px_100px_0px_#7424FF33]'
-                        : ''
+                        : 'cursor-pointer '
                     )}>
                     <CardItem
                       translateZ="50"

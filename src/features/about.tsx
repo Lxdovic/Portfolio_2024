@@ -38,7 +38,7 @@ const About = () => {
       />
 
       <div className="flex w-full justify-center">
-        <h2 className="relative z-10 flex w-[24rem] flex-col pt-32 font-['AlmarenaDisplayBold'] text-8xl font-bold uppercase text-white">
+        <h2 className="relative z-10 flex w-[12rem] flex-col pt-32 font-['AlmarenaDisplayBold'] text-[3rem] font-bold uppercase leading-[3rem] text-white sm:w-[20rem] sm:text-7xl lg:w-[24rem] lg:text-8xl">
           <AnimatedText className="text-start text-primary">About</AnimatedText>
           <AnimatedText
             delay={0.1}
@@ -49,22 +49,22 @@ const About = () => {
       </div>
 
       <div className="relative flex h-96 w-full flex-col items-center justify-center space-y-4 overflow-hidden px-4">
-        <h3 className="flex flex-col font-['AlmarenaDisplayBold'] text-7xl uppercase leading-[3.4rem]">
+        <h3 className="flex flex-col font-['AlmarenaDisplayBold'] text-[1.5rem] uppercase leading-[1.5rem] sm:text-[2rem] sm:leading-[2rem] md:text-[3rem] md:leading-[2.5rem] lg:text-7xl lg:leading-[3.4rem]">
           <AnimatedText>Crafting</AnimatedText>
           <AnimatedText
             delay={0.1}
-            className="ml-20">
+            className="md:ml-20">
             digital experiences
           </AnimatedText>
           <AnimatedText
             delay={0.1}
-            className="ml-10">
+            className="md:ml-10">
             and solving
           </AnimatedText>
           <AnimatedText delay={0.1}> problems</AnimatedText>
           <AnimatedText
             delay={0.1}
-            className="ml-10">
+            className="md:ml-10">
             is what I do best
           </AnimatedText>
         </h3>
