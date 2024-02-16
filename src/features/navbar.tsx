@@ -18,12 +18,28 @@ import {AnimatePresence, motion} from 'framer-motion'
 import {projects} from '@/data/projects'
 import {about} from '@/data/about'
 import profilePicture from '@/assets/images/pfp.jpeg'
+import {isBrowser, isMobile} from 'react-device-detect'
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer'
+import {Button} from '@/components/ui/button'
+import {useRouter} from 'next/navigation'
+import {Icon} from '@iconify/react'
 
 export function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0)
   const [isOpen, setIsOpen] = useState(true)
 
   const handleDisplayNavbar = useCallback(() => {
+    if (isMobile) return setIsOpen(true)
+
     if (typeof window !== 'undefined') {
       setIsOpen(window.scrollY <= lastScrollY)
       setLastScrollY(window.scrollY)
@@ -40,10 +56,88 @@ export function Navbar() {
     }
   }, [handleDisplayNavbar])
 
-  return <AnimatePresence>{isOpen && <NavItems />}</AnimatePresence>
+  if (isMobile)
+    return <AnimatePresence>{isOpen && <NavItemsMobile />}</AnimatePresence>
+  if (isBrowser)
+    return <AnimatePresence>{isOpen && <NavItemsBrowser />}</AnimatePresence>
 }
 
-const NavItems = () => {
+const NavItemsMobile = () => {
+  const router = useRouter()
+
+  return (
+    <Drawer>
+      <DrawerTrigger
+        asChild
+        className="fixed left-2 top-2 z-50 flex h-12 text-white shadow-none outline-0 ring-0">
+        <Button
+          variant="ghost"
+          className="h-max p-2 outline-0">
+          <Icon
+            icon="bx:menu-alt-left"
+            height={40}
+          />
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent className="z-50">
+        <div className="mx-auto w-full max-w-sm">
+          <DrawerHeader className="flex justify-between gap-4">
+            <Image
+              height="70"
+              width="70"
+              className="rounded-full"
+              src={profilePicture}
+              alt="Ludovic Debever"
+            />
+            <div className="flex flex-col items-start justify-center gap-2">
+              <DrawerTitle className="text-start">Ludovic Debever</DrawerTitle>
+              <DrawerDescription className="text-start">
+                Student & Half-time software engineer @Holis
+              </DrawerDescription>
+            </div>
+          </DrawerHeader>
+          <div className="p-4 pb-0">
+            {`Hey, I'm Ludovic, a 23-year-old french student passionate about
+              code. I am currently studying at Epitech Paris, and working at
+              Holis, a SaaS startup based at Station F.`}
+          </div>
+
+          <DrawerFooter>
+            <DrawerClose className="flex flex-col gap-2">
+              <div className="flex w-full gap-2 rounded-md border">
+                <Button
+                  onClick={() => router.push('/#home', {scroll: false})}
+                  variant="ghost"
+                  className="flex-grow">
+                  Home
+                </Button>
+                <Button
+                  onClick={() => router.push('/#about', {scroll: false})}
+                  variant="ghost"
+                  className="flex-grow">
+                  About
+                </Button>
+                <Button
+                  onClick={() => router.push('/#work', {scroll: false})}
+                  variant="ghost"
+                  className="flex-grow">
+                  Work
+                </Button>
+              </div>
+              <Button
+                variant="outline"
+                className="w-full">
+                Close
+              </Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  )
+}
+
+const NavItemsBrowser = () => {
   return (
     <motion.div
       key="navbar"
@@ -131,8 +225,6 @@ const NavItems = () => {
     </motion.div>
   )
 }
-
-export default NavItems
 
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
