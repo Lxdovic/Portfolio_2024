@@ -3,6 +3,7 @@ import {Inter} from 'next/font/google'
 import {ThemeProvider} from '@/theme/theme-provider'
 import React from 'react'
 import './globals.css'
+import {cn} from '@/lib/utils'
 
 const fontSans = Inter({subsets: ['latin']})
 
@@ -22,9 +23,14 @@ export default function RootLayout({
       suppressHydrationWarning>
       <head>
         <title>Portfolio</title>
+        <meta charSet={'utf-8'} />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
       </head>
       <body
-        className={fontSans.className}
+        className={cn(fontSans.className, 'w-full')}
         suppressHydrationWarning>
         <ThemeProvider
           attribute="class"

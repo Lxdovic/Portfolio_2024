@@ -55,7 +55,7 @@ const Projects = () => {
     <section
       id="work"
       className="relative flex h-screen flex-col items-center overflow-hidden bg-background">
-      <h1 className="flex w-[36rem] flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-8xl font-bold uppercase text-white">
+      <h1 className="flex flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-[3rem] font-bold uppercase leading-[3rem] text-white sm:w-[28rem] sm:text-7xl lg:w-[36rem]  lg:text-8xl">
         <AnimatedText className="text-start text-primary">
           Selected
         </AnimatedText>
