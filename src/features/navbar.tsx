@@ -29,7 +29,6 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer'
 import {Button} from '@/components/ui/button'
-import {useRouter} from 'next/navigation'
 import {Icon} from '@iconify/react'
 import profilePicture from '@/assets/images/pfp.jpeg'
 import iphonePicture from '@/assets/images/phone.png'
@@ -69,7 +68,6 @@ export function Navbar() {
 }
 
 const NavItemsMobile = () => {
-  const router = useRouter()
   const [isOpen, setIsOpen] = useState(true)
 
   return (
@@ -125,7 +123,7 @@ const NavItemsMobile = () => {
         </DialogContent>
       </Dialog>
 
-      <Drawer>
+      <Drawer modal={false}>
         <DrawerTrigger
           asChild
           className="fixed left-2 top-2 z-50 flex h-12 text-white shadow-none outline-0 ring-0">
@@ -165,33 +163,11 @@ const NavItemsMobile = () => {
 
             <DrawerFooter>
               <DrawerClose asChild>
-                <div className="flex flex-col gap-2">
-                  <div className="flex w-full gap-2 rounded-md border">
-                    <Button
-                      onClick={() => router.push('/#home', {scroll: false})}
-                      variant="ghost"
-                      className="flex-grow">
-                      Home
-                    </Button>
-                    <Button
-                      onClick={() => router.push('/#about', {scroll: false})}
-                      variant="ghost"
-                      className="flex-grow">
-                      About
-                    </Button>
-                    <Button
-                      onClick={() => router.push('/#work', {scroll: false})}
-                      variant="ghost"
-                      className="flex-grow">
-                      Work
-                    </Button>
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="w-full">
-                    Close
-                  </Button>
-                </div>
+                <Button
+                  variant="outline"
+                  className="w-full">
+                  Close
+                </Button>
               </DrawerClose>
             </DrawerFooter>
           </div>
@@ -211,7 +187,7 @@ const NavItemsBrowser = () => {
       className="fixed top-0 z-50 flex h-12 w-full justify-center">
       <Link
         tabIndex={0}
-        href="#home"
+        href="/#home"
         className="absolute left-6 mr-auto flex h-12 items-center font-['AlmarenaDisplayBold'] uppercase">
         Ludovic Debever
       </Link>
