@@ -34,7 +34,7 @@ const About = () => {
       id="about"
       className="relative border-b">
       <Meteors
-        number={isMobile ? 10 : 60}
+        number={isMobile ? 0 : 60}
         className="z-0"
       />
 
