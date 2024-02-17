@@ -17,7 +17,6 @@ import {
 import {AnimatePresence, motion} from 'framer-motion'
 import {projects} from '@/data/projects'
 import {about} from '@/data/about'
-import profilePicture from '@/assets/images/pfp.jpeg'
 import {isBrowser, isMobile} from 'react-device-detect'
 import {
   Drawer,
@@ -32,10 +31,14 @@ import {
 import {Button} from '@/components/ui/button'
 import {useRouter} from 'next/navigation'
 import {Icon} from '@iconify/react'
+import profilePicture from '@/assets/images/pfp.jpeg'
+import iphonePicture from '@/assets/images/phone.png'
+import {Dialog, DialogContent} from '@/components/ui/dialog'
 
 export function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0)
   const [isOpen, setIsOpen] = useState(true)
+  const [isHydrated, setIsHydrated] = useState(false)
 
   const handleDisplayNavbar = useCallback(() => {
     if (isMobile) return setIsOpen(true)
@@ -48,6 +51,7 @@ export function Navbar() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      setIsHydrated(true)
       window.addEventListener('scroll', handleDisplayNavbar)
 
       return () => {
@@ -55,6 +59,8 @@ export function Navbar() {
       }
     }
   }, [handleDisplayNavbar])
+
+  if (!isHydrated) return null
 
   if (isMobile)
     return <AnimatePresence>{isOpen && <NavItemsMobile />}</AnimatePresence>
@@ -64,76 +70,134 @@ export function Navbar() {
 
 const NavItemsMobile = () => {
   const router = useRouter()
+  const [isOpen, setIsOpen] = useState(true)
 
   return (
-    <Drawer>
-      <DrawerTrigger
-        asChild
-        className="fixed left-2 top-2 z-50 flex h-12 text-white shadow-none outline-0 ring-0">
-        <Button
-          variant="ghost"
-          className="h-max p-2 outline-0">
-          <Icon
-            icon="bx:menu-alt-left"
-            height={40}
-          />
-        </Button>
-      </DrawerTrigger>
-      <DrawerContent className="z-50">
-        <div className="mx-auto w-full max-w-sm">
-          <DrawerHeader className="flex justify-between gap-4">
-            <Image
-              height="70"
-              width="70"
-              className="rounded-full"
-              src={profilePicture}
-              alt="Ludovic Debever"
-            />
-            <div className="flex flex-col items-start justify-center gap-2">
-              <DrawerTitle className="text-start">Ludovic Debever</DrawerTitle>
-              <DrawerDescription className="text-start">
-                Student & Half-time software engineer @Holis
-              </DrawerDescription>
+    <>
+      <Dialog open={isOpen}>
+        <DialogContent className="top-0 w-[calc(100vw-1rem)] translate-y-4 rounded-md">
+          <div className="flex gap-6">
+            <div
+              className="w-max flex-grow"
+              style={{
+                perspective: 1000,
+              }}>
+              <motion.div
+                initial={{
+                  rotateY: 0,
+                  rotateX: 0,
+                }}
+                animate={{
+                  rotateY: [0, 50, -50, 0, 0, 0],
+                  rotateX: [0, 0, 0, 50, -50, 0],
+                  transition: {
+                    duration: 8,
+                    ease: 'easeInOut',
+                    repeat: Infinity,
+                    repeatType: 'loop',
+                  },
+                }}
+                className="w-max">
+                <Image
+                  width="120"
+                  src={iphonePicture}
+                  alt="Phone rotating"
+                />
+              </motion.div>
             </div>
-          </DrawerHeader>
-          <div className="p-4 pb-0">
-            {`Hey, I'm Ludovic, a 23-year-old french student passionate about
+
+            <div className="flex flex-col gap-4">
+              <p className="text-xl font-semibold">Rotate your phone!</p>
+              <p className="text-white/80">
+                {`Some animations are using your phone's gyroscope, rotate your
+                  phone for a better experience!`}
+              </p>
+
+              <Button
+                type="submit"
+                variant="outline"
+                className="mt-auto"
+                onClick={() => setIsOpen(false)}>
+                Got it!
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Drawer>
+        <DrawerTrigger
+          asChild
+          className="fixed left-2 top-2 z-50 flex h-12 text-white shadow-none outline-0 ring-0">
+          <Button
+            variant="ghost"
+            className="h-max p-2 outline-0">
+            <Icon
+              icon="bx:menu-alt-left"
+              height={40}
+            />
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent className="z-50">
+          <div className="mx-auto w-full max-w-sm">
+            <DrawerHeader className="flex justify-between gap-4">
+              <Image
+                height="70"
+                width="70"
+                className="rounded-full"
+                src={profilePicture}
+                alt="Ludovic Debever"
+              />
+              <div className="flex flex-col items-start justify-center gap-2">
+                <DrawerTitle className="text-start">
+                  Ludovic Debever
+                </DrawerTitle>
+                <DrawerDescription className="text-start">
+                  Student & Half-time software engineer @Holis
+                </DrawerDescription>
+              </div>
+            </DrawerHeader>
+            <div className="p-4 pb-0">
+              {`Hey, I'm Ludovic, a 23-year-old french student passionate about
               code. I am currently studying at Epitech Paris, and working at
               Holis, a SaaS startup based at Station F.`}
-          </div>
+            </div>
 
-          <DrawerFooter>
-            <DrawerClose className="flex flex-col gap-2">
-              <div className="flex w-full gap-2 rounded-md border">
-                <Button
-                  onClick={() => router.push('/#home', {scroll: false})}
-                  variant="ghost"
-                  className="flex-grow">
-                  Home
-                </Button>
-                <Button
-                  onClick={() => router.push('/#about', {scroll: false})}
-                  variant="ghost"
-                  className="flex-grow">
-                  About
-                </Button>
-                <Button
-                  onClick={() => router.push('/#work', {scroll: false})}
-                  variant="ghost"
-                  className="flex-grow">
-                  Work
-                </Button>
-              </div>
-              <Button
-                variant="outline"
-                className="w-full">
-                Close
-              </Button>
-            </DrawerClose>
-          </DrawerFooter>
-        </div>
-      </DrawerContent>
-    </Drawer>
+            <DrawerFooter>
+              <DrawerClose asChild>
+                <div className="flex flex-col gap-2">
+                  <div className="flex w-full gap-2 rounded-md border">
+                    <Button
+                      onClick={() => router.push('/#home', {scroll: false})}
+                      variant="ghost"
+                      className="flex-grow">
+                      Home
+                    </Button>
+                    <Button
+                      onClick={() => router.push('/#about', {scroll: false})}
+                      variant="ghost"
+                      className="flex-grow">
+                      About
+                    </Button>
+                    <Button
+                      onClick={() => router.push('/#work', {scroll: false})}
+                      variant="ghost"
+                      className="flex-grow">
+                      Work
+                    </Button>
+                  </div>
+                  <Button
+                    variant="outline"
+                    className="w-full">
+                    Close
+                  </Button>
+                </div>
+              </DrawerClose>
+            </DrawerFooter>
+          </div>
+        </DrawerContent>
+      </Drawer>
+    </>
   )
 }
 
@@ -173,7 +237,7 @@ const NavItemsBrowser = () => {
               <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                 <li className="row-span-3">
                   <NavigationMenuLink asChild>
-                    <a
+                    <Link
                       className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                       href="/">
                       <Image
@@ -189,7 +253,7 @@ const NavItemsBrowser = () => {
                       <p className="text-sm leading-tight text-muted-foreground">
                         Software Architect, Fullstack Developer
                       </p>
-                    </a>
+                    </Link>
                   </NavigationMenuLink>
                 </li>
                 {about.map((content) => (
