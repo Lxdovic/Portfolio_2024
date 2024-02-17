@@ -49,6 +49,10 @@ const SphereMobile = () => {
 
   useLayoutEffect(() => {
     window.addEventListener('deviceorientation', onDeviceOrientation, true)
+
+    return () => {
+      window.removeEventListener('deviceorientation', onDeviceOrientation, true)
+    }
   }, [])
 
   useFrame((state) => {
