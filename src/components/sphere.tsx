@@ -58,7 +58,7 @@ const SphereMobile = () => {
     if (!target.current) return
 
     const gammaRad = THREE.MathUtils.degToRad(
-      map(orientation?.gamma || 0, -90, 90, 0, 360)
+      map(orientation?.gamma - 30 || 0, -90, 90, 0, 360)
     )
     const betaRad = THREE.MathUtils.degToRad(
       map(orientation?.beta || 0, -180, 180, 0, 360)
@@ -75,7 +75,6 @@ const SphereMobile = () => {
     state.camera.lookAt(0, 0, 0)
     state.raycaster.setFromCamera(state.pointer, state.camera)
 
-    const intersects = state.raycaster.intersectObject(transparentMesh.current)
     const elapsed = state.clock.getElapsedTime()
 
     const total = Math.PI * 20
@@ -84,8 +83,7 @@ const SphereMobile = () => {
     for (let i = 0; i < total; i++) {
       let lon = map(i, 0, total, 0, Math.PI)
       for (let j = 0; j < total; j++) {
-        let lat = map(j, 0, total, -Math.PI, Math.PI)
-
+        const lat = map(j, 0, total, -Math.PI, Math.PI)
         const animatedRadius = radius + Math.sin(lon * 15 + elapsed * 2) * 0.1
         const animatedLat = lat + elapsed * 0.1
 
@@ -177,8 +175,7 @@ const SphereBrowser = () => {
     for (let i = 0; i < total; i++) {
       let lon = map(i, 0, total, 0, Math.PI)
       for (let j = 0; j < total; j++) {
-        let lat = map(j, 0, total, -Math.PI, Math.PI)
-
+        const lat = map(j, 0, total, -Math.PI, Math.PI)
         const animatedRadius = radius + Math.sin(lon * 15 + elapsed * 2) * 0.1
         const animatedLat = lat + elapsed * 0.1
 
