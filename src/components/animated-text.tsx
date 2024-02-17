@@ -15,7 +15,8 @@ const AnimatedText = ({children, className, delay = 0}: IAnimatedText) => {
   const fragments = children.split('')
 
   useEffect(() => {
-    inView ? controls.start('visible') : controls.start('hidden')
+    if (inView) controls.start('visible')
+    else controls.start('hidden')
   }, [controls, inView])
 
   return (

@@ -4,12 +4,101 @@ import React, {useEffect, useRef, useState} from 'react'
 import {AnimatePresence, motion} from 'framer-motion'
 import {projects} from '@/data/projects'
 import Image from 'next/image'
+import {
+  CardBodyMobile,
+  CardContainerMobile,
+  CardItemMobile,
+} from '@/components/ui/3d-card-mobile'
 import {CardBody, CardContainer, CardItem} from '@/components/ui/3d-card'
 import {Button} from '@/components/ui/button'
 import {cn} from '@/lib/utils'
 import AnimatedText from '@/components/animated-text'
+import {isBrowser, isMobile} from 'react-device-detect'
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
 
 const Projects = () => {
+  const [isHydrated, setIsHydrated] = useState(true)
+
+  useEffect(() => {
+    setIsHydrated(false)
+  }, [])
+
+  if (isHydrated) return null
+
+  // return <ProjectsMobile />
+  if (isMobile) return <ProjectsMobile />
+  if (isBrowser) return <ProjectsBrowser />
+}
+
+const ProjectsMobile = () => {
+  return (
+    <div className="flex h-screen flex-col items-center">
+      <h1 className="flex w-[18rem] flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-[3rem] font-bold uppercase leading-[3rem] text-white sm:w-[28rem] sm:text-7xl lg:w-[36rem]  lg:text-8xl">
+        <AnimatedText className="text-start text-primary">
+          Selected
+        </AnimatedText>
+        <AnimatedText
+          delay={0.1}
+          className="text-end">
+          work
+        </AnimatedText>
+      </h1>
+
+      <Carousel
+        orientation="horizontal"
+        className="flex w-full flex-col">
+        <CarouselContent>
+          {projects.map((project, index) => (
+            <CarouselItem
+              key={index}
+              className="flex h-[400px] w-full p-10">
+              <CardContainerMobile className="inter-var">
+                <CardBodyMobile className="group/card relative h-full w-full rounded-xl p-6 transition-shadow">
+                  <CardItemMobile
+                    translateZ="50"
+                    className="w-full overflow-hidden font-['AlmarenaDisplayBold'] text-5xl font-bold uppercase text-neutral-600 dark:text-white">
+                    <h2>{project.title}</h2>
+                  </CardItemMobile>
+                  <CardItemMobile
+                    translateZ="50"
+                    className="mt-2 max-w-sm text-sm text-neutral-500 dark:text-neutral-300">
+                    <p className="drop-shadow-[0px_0px_4px_#000000ff]">
+                      {project.description}
+                    </p>
+                  </CardItemMobile>
+                  <CardItemMobile
+                    translateZ="0"
+                    className="absolute left-0 top-0 -z-10 h-full w-full">
+                    <Image
+                      src={project.image}
+                      height="1000"
+                      width="1000"
+                      className="cover h-full w-full rounded-xl object-cover group-hover/card:shadow-xl"
+                      alt={project.alt}
+                    />
+                  </CardItemMobile>
+                </CardBodyMobile>
+              </CardContainerMobile>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <div className="flex justify-center gap-10 px-6">
+          <CarouselPrevious className="relative left-0 top-0" />
+          <CarouselNext className="relative left-0 top-0" />
+        </div>
+      </Carousel>
+    </div>
+  )
+}
+
+const ProjectsBrowser = () => {
   const [smallWidth, setSmallWidth] = useState<number>(200)
   const [bigWidth, setBigWidth] = useState<number>(700)
   const [hydrationLoad, setHydrationLoad] = useState(true)
@@ -114,7 +203,7 @@ const Projects = () => {
                   y: Math.sin(index - currentProject) * 75,
                   x: xPos,
                   width,
-                  zIndex: isCurrentProject ? 100 : 0,
+                  zIndex: isCurrentProject ? 40 : 0,
                   transition: {
                     duration: 1,
                     ease: [0.85, 0, 0.25, 1],
@@ -123,7 +212,7 @@ const Projects = () => {
                 exit={{
                   padding: 0,
                   opacity: isCurrentProject ? 1 : 0,
-                  zIndex: 100,
+                  zIndex: 40,
                   transition: {
                     duration: isCurrentProject ? 1.5 : 0.4,
                     ease: [0.75, 0, 0.35, 1],

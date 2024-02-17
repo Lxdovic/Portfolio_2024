@@ -2,8 +2,9 @@
 
 import {Canvas, useFrame} from '@react-three/fiber'
 import * as THREE from 'three'
-import {useRef} from 'react'
-import {Stats} from '@react-three/drei'
+import {useLayoutEffect, useRef, useState} from 'react'
+import {isBrowser, isMobile} from 'react-device-detect'
+
 const SphereContainer = () => {
   return (
     <Canvas
@@ -20,7 +21,8 @@ const SphereContainer = () => {
         position={[0, 1, 2]}
         color="white"
       />
-      <Sphere />
+      {isBrowser && <SphereBrowser />}
+      {isMobile && <SphereMobile />}
     </Canvas>
   )
 }
@@ -28,7 +30,114 @@ const SphereContainer = () => {
 const map = (value: number, x1: number, y1: number, x2: number, y2: number) =>
   ((value - x1) * (y2 - x2)) / (y1 - x1) + x2
 
-const Sphere = () => {
+const SphereMobile = () => {
+  const mesh: any = useRef()
+  const transparentMesh: any = useRef()
+  const geometry: any = useRef()
+  const positions: any = useRef([])
+  const colors: any = useRef([])
+  const target: any = useRef(new THREE.Vector3(0, 0, 0))
+
+  const [orientation, setOrientation] = useState<any>()
+  const onDeviceOrientation = (event: DeviceOrientationEvent) => {
+    setOrientation({
+      alpha: event.alpha,
+      beta: event.beta,
+      gamma: event.gamma,
+    })
+  }
+
+  useLayoutEffect(() => {
+    window.addEventListener('deviceorientation', onDeviceOrientation, true)
+
+    return () => {
+      window.removeEventListener('deviceorientation', onDeviceOrientation, true)
+    }
+  }, [])
+
+  useFrame((state) => {
+    if (!mesh.current) return
+    if (!positions.current) return
+    if (!colors.current) return
+    if (!target.current) return
+
+    const gammaRad = THREE.MathUtils.degToRad(
+      map(orientation?.gamma - 30 || 0, -90, 90, 0, 360)
+    )
+    const betaRad = THREE.MathUtils.degToRad(
+      map(orientation?.beta || 0, -180, 180, 0, 360)
+    )
+    const cameraRadius = 8
+
+    const targetPosition = new THREE.Vector3(
+      cameraRadius * Math.cos(-gammaRad),
+      cameraRadius * Math.sin(-betaRad),
+      cameraRadius * Math.sin(-gammaRad)
+    )
+
+    state.camera.position.lerp(targetPosition, 0.05)
+    state.camera.lookAt(0, 0, 0)
+    state.raycaster.setFromCamera(state.pointer, state.camera)
+
+    const elapsed = state.clock.getElapsedTime()
+
+    const total = Math.PI * 20
+    const radius = 3
+
+    for (let i = 0; i < total; i++) {
+      let lon = map(i, 0, total, 0, Math.PI)
+      for (let j = 0; j < total; j++) {
+        const lat = map(j, 0, total, -Math.PI, Math.PI)
+        const animatedRadius = radius + Math.sin(lon * 15 + elapsed * 2) * 0.1
+        const animatedLat = lat + elapsed * 0.1
+
+        target.current.x =
+          animatedRadius * Math.sin(lon) * Math.cos(animatedLat)
+        target.current.y =
+          animatedRadius * Math.sin(lon) * Math.sin(animatedLat)
+        target.current.z = animatedRadius * Math.cos(lon)
+
+        const index = i * Math.round(total) + j
+        const position = new THREE.Vector3(
+          ...(positions.current[index] || [0, 0, 0])
+        )
+
+        const finalPos = position.lerp(target.current, 0.1)
+
+        positions.current[index] = [finalPos.x, finalPos.y, finalPos.z]
+      }
+    }
+
+    geometry.current.setAttribute(
+      'position',
+      new THREE.BufferAttribute(new Float32Array(positions.current.flat(1)), 3)
+    )
+  })
+
+  return (
+    <>
+      <mesh ref={transparentMesh}>
+        <sphereGeometry args={[3.2, 100, 100]} />
+        <meshBasicMaterial
+          opacity={0}
+          transparent
+        />
+      </mesh>
+
+      <points
+        ref={mesh}
+        type="Points">
+        <bufferGeometry ref={geometry} />
+        <pointsMaterial
+          color={'#7424FF'}
+          size={0.03}
+        />
+      </points>
+    </>
+  )
+}
+
+const SphereBrowser = () => {
   const mesh: any = useRef()
   const transparentMesh: any = useRef()
   const geometry: any = useRef()
@@ -70,8 +179,7 @@ const Sphere = () => {
     for (let i = 0; i < total; i++) {
       let lon = map(i, 0, total, 0, Math.PI)
       for (let j = 0; j < total; j++) {
-        let lat = map(j, 0, total, -Math.PI, Math.PI)
-
+        const lat = map(j, 0, total, -Math.PI, Math.PI)
         const animatedRadius = radius + Math.sin(lon * 15 + elapsed * 2) * 0.1
         const animatedLat = lat + elapsed * 0.1
 

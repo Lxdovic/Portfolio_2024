@@ -8,6 +8,7 @@ import {Badge} from '@/components/ui/badge'
 import {Icon} from '@iconify/react'
 import AnimatedText from '@/components/animated-text'
 import {useInView} from 'react-intersection-observer'
+import {isMobile} from 'react-device-detect'
 
 interface IFlexBadge {
   children: React.ReactNode
@@ -33,7 +34,7 @@ const About = () => {
       id="about"
       className="relative border-b">
       <Meteors
-        number={60}
+        number={isMobile ? 10 : 60}
         className="z-0"
       />
 
@@ -61,7 +62,7 @@ const About = () => {
             className="md:ml-10">
             and solving
           </AnimatedText>
-          <AnimatedText delay={0.1}> problems</AnimatedText>
+          <AnimatedText delay={0.1}>problems</AnimatedText>
           <AnimatedText
             delay={0.1}
             className="md:ml-10">
