@@ -4,6 +4,7 @@ import {ThemeProvider} from '@/theme/theme-provider'
 import React from 'react'
 import './globals.css'
 import {cn} from '@/lib/utils'
+import {Toaster} from '@/components/ui/sonner'
 
 const fontSans = Inter({subsets: ['latin']})
 
@@ -39,6 +40,7 @@ export default function RootLayout({
           disableTransitionOnChange>
           {children}
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   )
