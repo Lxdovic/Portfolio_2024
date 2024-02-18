@@ -40,6 +40,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(true)
   const [isHydrated, setIsHydrated] = useState(false)
   const {isTablet} = useScreenDetector()
+  const hasWarningBeenDisplayed = React.useRef(false)
 
   const handleDisplayNavbar = useCallback(() => {
     if (isMobile) return setIsOpen(true)
@@ -51,10 +52,14 @@ export function Navbar() {
   }, [lastScrollY])
 
   useEffect(() => {
-    if (isTablet && isHydrated && !isMobile) {
-      // hasMessageBeenSent.current = true
+    if (
+      isTablet &&
+      isHydrated &&
+      !isMobile &&
+      !hasWarningBeenDisplayed.current
+    ) {
+      hasWarningBeenDisplayed.current = true
 
-      console.log('isTablet', isTablet)
       toast.custom((id) => (
         <div className="flex gap-4 rounded-md border p-4">
           <p className="text-sm text-white/80">
