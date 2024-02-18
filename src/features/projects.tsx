@@ -22,9 +22,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import {useScreenDetector} from '@/lib/useScreenDetector'
+import RotatingPhone from '@/components/rotating-phone'
 
 const Projects = () => {
   const [isHydrated, setIsHydrated] = useState(true)
+  const {isMobile: isMobileWidth} = useScreenDetector()
 
   useEffect(() => {
     setIsHydrated(false)
@@ -32,14 +35,13 @@ const Projects = () => {
 
   if (isHydrated) return null
 
-  // return <ProjectsMobile />
-  if (isMobile) return <ProjectsMobile />
+  if (isMobile || isMobileWidth) return <ProjectsMobile />
   if (isBrowser) return <ProjectsBrowser />
 }
 
 const ProjectsMobile = () => {
   return (
-    <div className="flex h-screen flex-col items-center">
+    <div className="flex flex-col items-center">
       <h1 className="flex w-[18rem] flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-[3rem] font-bold uppercase leading-[3rem] text-white sm:w-[28rem] sm:text-7xl lg:w-[36rem]  lg:text-8xl">
         <AnimatedText className="text-start text-primary">
           Selected
@@ -63,7 +65,7 @@ const ProjectsMobile = () => {
                 <CardBodyMobile className="group/card relative h-full w-full rounded-xl p-6 transition-shadow">
                   <CardItemMobile
                     translateZ="50"
-                    className="w-full overflow-hidden font-['AlmarenaDisplayBold'] text-5xl font-bold uppercase text-neutral-600 dark:text-white">
+                    className="w-full overflow-hidden font-['AlmarenaDisplayBold'] text-4xl font-bold uppercase text-neutral-600 dark:text-white min-[400px]:text-5xl">
                     <h2>{project.title}</h2>
                   </CardItemMobile>
                   <CardItemMobile
@@ -89,11 +91,16 @@ const ProjectsMobile = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
+
         <div className="flex justify-center gap-10 px-6">
           <CarouselPrevious className="relative left-0 top-0" />
           <CarouselNext className="relative left-0 top-0" />
         </div>
       </Carousel>
+
+      <div className="flex h-32 w-32 items-center justify-center">
+        <RotatingPhone width={32} />
+      </div>
     </div>
   )
 }

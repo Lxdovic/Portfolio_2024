@@ -31,9 +31,9 @@ import {
 import {Button} from '@/components/ui/button'
 import {Icon} from '@iconify/react'
 import profilePicture from '@/assets/images/pfp.jpeg'
-import iphonePicture from '@/assets/images/phone.png'
 import {Dialog, DialogContent} from '@/components/ui/dialog'
 import {toast} from 'sonner'
+import RotatingPhone from '@/components/rotating-phone'
 
 export function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0)
@@ -99,37 +99,10 @@ const NavItemsMobile = () => {
 
   return (
     <>
-      <Dialog open={false}>
+      <Dialog open={isOpen && isMobile}>
         <DialogContent className="top-0 w-[calc(100vw-1rem)] translate-y-4 rounded-md">
           <div className="flex gap-6">
-            <div
-              className="w-max flex-grow"
-              style={{
-                perspective: 1000,
-              }}>
-              <motion.div
-                initial={{
-                  rotateY: 0,
-                  rotateX: 0,
-                }}
-                animate={{
-                  rotateY: [0, 50, -50, 0, 0, 0],
-                  rotateX: [0, 0, 0, 50, -50, 0],
-                  transition: {
-                    duration: 8,
-                    ease: 'easeInOut',
-                    repeat: Infinity,
-                    repeatType: 'loop',
-                  },
-                }}
-                className="w-max">
-                <Image
-                  width="120"
-                  src={iphonePicture}
-                  alt="Phone rotating"
-                />
-              </motion.div>
-            </div>
+            <RotatingPhone width={120} />
 
             <div className="flex flex-col gap-4">
               <p className="text-xl font-semibold">Rotate your phone!</p>
