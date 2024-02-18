@@ -13,7 +13,7 @@ const RotatingPhone = ({width = 120}) => {
     <div
       className="flex h-full w-full items-center justify-center"
       style={{
-        perspective: 1000,
+        perspective: '400px',
       }}>
       <motion.div
         initial={{
