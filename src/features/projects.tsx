@@ -234,7 +234,7 @@ const ProjectsBrowser = () => {
                       <AnimatePresence>
                         <motion.h2
                           key={'projectTitle' + index}
-                          className="z-10 truncate text-clip font-['AlmarenaDisplayBold'] text-[4.2rem] font-extrabold uppercase leading-tight tracking-tight text-white drop-shadow-xl"
+                          className="z-10 truncate text-clip  font-['AlmarenaDisplayBold'] font-extrabold uppercase leading-tight tracking-tight text-white drop-shadow-xl xl:text-[4.2rem]"
                           initial={{opacity: 0}}
                           animate={{
                             opacity: isCurrentProject ? 1 : 0,
