@@ -16,8 +16,8 @@ import {
 } from '@/components/ui/navigation-menu'
 import {AnimatePresence, motion} from 'framer-motion'
 import {projects} from '@/data/projects'
-import {about} from '@/data/about'
 import {isBrowser, isMobile} from 'react-device-detect'
+import {useScreenDetector} from '@/lib/useScreenDetector'
 import {
   Drawer,
   DrawerClose,
@@ -31,13 +31,16 @@ import {
 import {Button} from '@/components/ui/button'
 import {Icon} from '@iconify/react'
 import profilePicture from '@/assets/images/pfp.jpeg'
-import iphonePicture from '@/assets/images/phone.png'
 import {Dialog, DialogContent} from '@/components/ui/dialog'
+import {toast} from 'sonner'
+import RotatingPhone from '@/components/rotating-phone'
 
 export function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0)
   const [isOpen, setIsOpen] = useState(true)
   const [isHydrated, setIsHydrated] = useState(false)
+  const {isTablet} = useScreenDetector()
+  const hasWarningBeenDisplayed = React.useRef(false)
 
   const handleDisplayNavbar = useCallback(() => {
     if (isMobile) return setIsOpen(true)
@@ -49,19 +52,43 @@ export function Navbar() {
   }, [lastScrollY])
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsHydrated(true)
-      window.addEventListener('scroll', handleDisplayNavbar)
+    if (
+      isTablet &&
+      isHydrated &&
+      !isMobile &&
+      !hasWarningBeenDisplayed.current
+    ) {
+      hasWarningBeenDisplayed.current = true
 
-      return () => {
-        window.removeEventListener('scroll', handleDisplayNavbar)
-      }
+      toast.custom((id) => (
+        <div className="flex gap-4 rounded-md border p-4">
+          <p className="text-sm text-white/80">
+            {`It seems like you're trying to view the mobile version of this site on the wrong device. 
+            Go grab your phone, and enjoy the cool features this site has to offer for mobile users!`}
+          </p>
+          <Button
+            variant="outline"
+            onClick={() => toast.dismiss(id)}
+            className="self-end">
+            Dismiss
+          </Button>
+        </div>
+      ))
     }
-  }, [handleDisplayNavbar])
+  }, [isHydrated, isTablet])
+
+  useEffect(() => {
+    setIsHydrated(true)
+    window.addEventListener('scroll', handleDisplayNavbar)
+
+    return () => {
+      window.removeEventListener('scroll', handleDisplayNavbar)
+    }
+  }, [handleDisplayNavbar, isTablet])
 
   if (!isHydrated) return null
 
-  if (isMobile)
+  if (isMobile || isTablet)
     return <AnimatePresence>{isOpen && <NavItemsMobile />}</AnimatePresence>
   if (isBrowser)
     return <AnimatePresence>{isOpen && <NavItemsBrowser />}</AnimatePresence>
@@ -72,37 +99,10 @@ const NavItemsMobile = () => {
 
   return (
     <>
-      <Dialog open={isOpen}>
+      <Dialog open={isOpen && isMobile}>
         <DialogContent className="top-0 w-[calc(100vw-1rem)] translate-y-4 rounded-md">
           <div className="flex gap-6">
-            <div
-              className="w-max flex-grow"
-              style={{
-                perspective: 1000,
-              }}>
-              <motion.div
-                initial={{
-                  rotateY: 0,
-                  rotateX: 0,
-                }}
-                animate={{
-                  rotateY: [0, 50, -50, 0, 0, 0],
-                  rotateX: [0, 0, 0, 50, -50, 0],
-                  transition: {
-                    duration: 8,
-                    ease: 'easeInOut',
-                    repeat: Infinity,
-                    repeatType: 'loop',
-                  },
-                }}
-                className="w-max">
-                <Image
-                  width="120"
-                  src={iphonePicture}
-                  alt="Phone rotating"
-                />
-              </motion.div>
-            </div>
+            <RotatingPhone width={120} />
 
             <div className="flex flex-col gap-4">
               <p className="text-xl font-semibold">Rotate your phone!</p>
@@ -123,7 +123,7 @@ const NavItemsMobile = () => {
         </DialogContent>
       </Dialog>
 
-      <Drawer modal={false}>
+      <Drawer>
         <DrawerTrigger
           asChild
           className="fixed left-2 top-2 z-50 flex h-12 text-white shadow-none outline-0 ring-0">
@@ -210,11 +210,11 @@ const NavItemsBrowser = () => {
               About
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                <li className="row-span-3">
+              <ul className="flex gap-3 p-4 md:w-[400px] lg:w-[500px]">
+                <li className="w-64">
                   <NavigationMenuLink asChild>
                     <Link
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                      className="flex h-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                       href="/">
                       <Image
                         height="80"
@@ -232,14 +232,41 @@ const NavItemsBrowser = () => {
                     </Link>
                   </NavigationMenuLink>
                 </li>
-                {about.map((content) => (
-                  <ListItem
-                    key={content.title}
-                    href={`/about#${content.title.toLowerCase()}`}
-                    title={content.title}>
-                    {content.description}
-                  </ListItem>
-                ))}
+                <div className="flex w-3/5 flex-col gap-4">
+                  <p className="flex h-full text-sm text-white/80">
+                    {`Hey, I'm Ludovic, a 23-year-old french student passionate about
+              code. I am currently studying at Epitech Paris, and working at
+              Holis, a SaaS startup based at Station F.`}
+                  </p>
+
+                  <p className="flex h-full text-sm text-white/80">
+                    {`Let's get in contact, follow me on my socials.`}
+                  </p>
+
+                  <div className="flex gap-2 self-end">
+                    <Link href="https://github.com/Lxdovic">
+                      <Button
+                        variant="ghost"
+                        className="aspect-square p-1">
+                        <Icon
+                          icon="mdi:github"
+                          height={20}
+                        />
+                      </Button>
+                    </Link>
+
+                    <Link href="https://www.linkedin.com/in/debeverludovic/">
+                      <Button
+                        variant="ghost"
+                        className="aspect-square p-1">
+                        <Icon
+                          icon="mdi:linkedin"
+                          height={20}
+                        />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
