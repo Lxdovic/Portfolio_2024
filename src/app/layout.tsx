@@ -5,6 +5,7 @@ import React from 'react'
 import './globals.css'
 import {cn} from '@/lib/utils'
 import {Toaster} from '@/components/ui/sonner'
+import Footer from '@/features/footer'
 
 const fontSans = Inter({subsets: ['latin']})
 
@@ -21,7 +22,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning>
+      suppressHydrationWarning
+      className="scroll-smooth">
       <head>
         <title>Portfolio</title>
         <meta charSet={'utf-8'} />
@@ -41,6 +43,8 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
         <Toaster />
+
+        <Footer />
       </body>
     </html>
   )

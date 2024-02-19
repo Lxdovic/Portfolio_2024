@@ -1,5 +1,6 @@
+'use client'
+
 import Image from 'next/image'
-import profilePicture from '@/assets/images/pfp.jpeg'
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import {Icon} from '@iconify/react'
@@ -7,6 +8,7 @@ import * as React from 'react'
 import {useEffect} from 'react'
 import {isBrowser, isMobile} from 'react-device-detect'
 import {useScreenDetector} from '@/lib/useScreenDetector'
+import profilePicture from '@/assets/images/pfp.jpeg'
 
 const Footer = () => {
   const [isHydrated, setIsHydrated] = React.useState(false)
