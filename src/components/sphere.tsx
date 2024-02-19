@@ -130,7 +130,7 @@ const SphereMobile = () => {
         <bufferGeometry ref={geometry} />
         <pointsMaterial
           color={'#7424FF'}
-          size={0.03}
+          size={0.04}
         />
       </points>
     </>

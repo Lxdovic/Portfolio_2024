@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/carousel'
 import {useScreenDetector} from '@/lib/useScreenDetector'
 import RotatingPhone from '@/components/rotating-phone'
+import Link from 'next/link'
 
 const Projects = () => {
   const [isHydrated, setIsHydrated] = useState(true)
@@ -41,7 +42,9 @@ const Projects = () => {
 
 const ProjectsMobile = () => {
   return (
-    <div className="flex flex-col items-center">
+    <section
+      id="work"
+      className="flex flex-col items-center">
       <h1 className="flex w-[18rem] flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-[3rem] font-bold uppercase leading-[3rem] text-white sm:w-[28rem] sm:text-7xl lg:w-[36rem]  lg:text-8xl">
         <AnimatedText className="text-start text-primary">
           Selected
@@ -60,34 +63,39 @@ const ProjectsMobile = () => {
           {projects.map((project, index) => (
             <CarouselItem
               key={index}
-              className="flex h-[400px] w-full p-10">
-              <CardContainerMobile className="inter-var">
-                <CardBodyMobile className="group/card relative h-full w-full rounded-xl p-6 transition-shadow">
-                  <CardItemMobile
-                    translateZ="50"
-                    className="w-full overflow-hidden font-['AlmarenaDisplayBold'] text-4xl font-bold uppercase text-neutral-600 dark:text-white min-[400px]:text-5xl">
-                    <h2>{project.title}</h2>
-                  </CardItemMobile>
-                  <CardItemMobile
-                    translateZ="50"
-                    className="mt-2 max-w-sm text-sm text-neutral-500 dark:text-neutral-300">
-                    <p className="drop-shadow-[0px_0px_4px_#000000ff]">
-                      {project.description}
-                    </p>
-                  </CardItemMobile>
-                  <CardItemMobile
-                    translateZ="0"
-                    className="absolute left-0 top-0 -z-10 h-full w-full">
-                    <Image
-                      src={project.image}
-                      height="1000"
-                      width="1000"
-                      className="cover h-full w-full rounded-xl object-cover group-hover/card:shadow-xl"
-                      alt={project.alt}
-                    />
-                  </CardItemMobile>
-                </CardBodyMobile>
-              </CardContainerMobile>
+              className="flex h-[400px] w-full border p-10">
+              <Link
+                className="flex h-full w-full"
+                href={project.href}
+                key={index}>
+                <CardContainerMobile className="inter-var">
+                  <CardBodyMobile className="group/card relative h-full w-full rounded-xl p-6 transition-shadow">
+                    <CardItemMobile
+                      translateZ="50"
+                      className="w-full overflow-hidden font-['AlmarenaDisplayBold'] text-4xl font-bold uppercase text-neutral-600 dark:text-white min-[400px]:text-5xl">
+                      <h2>{project.title}</h2>
+                    </CardItemMobile>
+                    <CardItemMobile
+                      translateZ="50"
+                      className="mt-2 max-w-sm text-sm text-neutral-500 dark:text-neutral-300">
+                      <p className="drop-shadow-[0px_0px_4px_#000000ff]">
+                        {project.description}
+                      </p>
+                    </CardItemMobile>
+                    <CardItemMobile
+                      translateZ="0"
+                      className="absolute left-0 top-0 -z-10 h-full w-full">
+                      <Image
+                        src={project.image}
+                        height="1000"
+                        width="1000"
+                        className="cover h-full w-full rounded-xl object-cover group-hover/card:shadow-xl"
+                        alt={project.alt}
+                      />
+                    </CardItemMobile>
+                  </CardBodyMobile>
+                </CardContainerMobile>
+              </Link>
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -101,7 +109,7 @@ const ProjectsMobile = () => {
       <div className="flex h-32 w-32 items-center justify-center">
         <RotatingPhone width={32} />
       </div>
-    </div>
+    </section>
   )
 }
 
@@ -113,19 +121,6 @@ const ProjectsBrowser = () => {
     Math.floor(projects.length / 2)
   )
   const containerRef = useRef<HTMLDivElement | null>(null)
-
-  const handleClickProject = (
-    index: number,
-    project: Record<string, string>
-  ) => {
-    setCurrentProject(index)
-
-    if (index === currentProject) {
-      setTimeout(() => {
-        window.scrollTo(0, 0)
-      }, 800)
-    }
-  }
 
   const handleResize = () => {
     const smallWidth: number = window.innerWidth > 1200 ? 200 : 150
@@ -191,7 +186,7 @@ const ProjectsBrowser = () => {
             return (
               <motion.div
                 key={index + 'project'}
-                onClick={() => handleClickProject(index, project)}
+                onClick={() => setCurrentProject(index)}
                 className="absolute h-full px-2"
                 initial={{
                   y: Math.sin(index - currentProject) * 75,
@@ -292,11 +287,13 @@ const ProjectsBrowser = () => {
                             delay: 0.5,
                           },
                         }}>
-                        <Button
-                          variant="outline"
-                          className="border-white/40 bg-black/20">
-                          View {'->'}
-                        </Button>
+                        <Link href={project.href}>
+                          <Button
+                            variant="outline"
+                            className="border-white/40 bg-black/20">
+                            View {'->'}
+                          </Button>
+                        </Link>
                       </motion.div>
                     </CardItem>
                     <CardItem
