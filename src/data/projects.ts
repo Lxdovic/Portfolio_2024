@@ -6,7 +6,8 @@ export type Project = {
   alt: string
 }
 
-import chessChallenge from '@/assets/images/abstract1.jpg'
+import abstract1 from '@/assets/images/abstract1.jpg'
+import chessChallenge from '@/assets/images/chess-challenge/chess-challenge.png'
 import chessEngine from '@/assets/images/chess1.png'
 import ircApp from '@/assets/images/abstract2.jpg'
 import pathfinder from '@/assets/images/abstract3.jpg'
@@ -56,7 +57,7 @@ export const projects: Project[] = [
   {
     title: 'More',
     href: 'https://github.com/Lxdovic',
-    image: chessChallenge,
+    image: abstract1,
     alt: 'Abstract blue and pink background',
     description: 'more of my projects can be found on my GitHub profile.',
   },
