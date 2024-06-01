@@ -72,7 +72,7 @@ const ChessChallengeArticle = () => {
 
       <p>
         And to my surprise, my bot {'"Lxna"'}, barely made the playoffs (top63)
-        and was showcased in Sebastian's video against smol.cs which would later
+        and was showcased in Sebastian`&apos;s video against smol.cs which would later
         finish top 2 in the tournament.
       </p>
 
