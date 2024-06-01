@@ -5,8 +5,9 @@ import React from 'react'
 import {cn} from '@/lib/utils'
 import {Toaster} from '@/components/ui/sonner'
 import Footer from '@/features/footer'
-import './globals.css'
+import { Analytics } from '@vercel/analytics/react'
 import Head from 'next/head'
+import './globals.css'
 
 const fontSans = Inter({subsets: ['latin']})
 
@@ -40,6 +41,7 @@ export default function RootLayout({
       <body
         className={cn(fontSans.className, 'w-full')}
         suppressHydrationWarning>
+        <Analytics />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
