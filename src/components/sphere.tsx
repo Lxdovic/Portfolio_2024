@@ -4,12 +4,13 @@ import {Canvas, useFrame} from '@react-three/fiber'
 import * as THREE from 'three'
 import {useLayoutEffect, useRef, useState} from 'react'
 import {isBrowser, isMobile} from 'react-device-detect'
+import {OrbitControls} from '@react-three/drei'
 
 const SphereContainer = () => {
   return (
     <Canvas
       camera={{
-        position: [-4, 4, -6],
+        position: [-4, 4, -7],
       }}>
       <fogExp2
         attach="fog"
@@ -153,20 +154,20 @@ const SphereBrowser = () => {
     if (!colors.current) return
     if (!currentPoint.current) return
     if (!target.current) return
-
+    
     state.camera.position.x =
-      -4 + currentMouse.current.lerp(state.pointer, 0.03).x * 2
+      -1 + currentMouse.current.lerp(state.pointer, 0.03).x * 2
     state.camera.position.y =
       4 + currentMouse.current.lerp(state.pointer, 0.03).y * 2
     state.camera.lookAt(0, 0, 0)
     state.raycaster.setFromCamera(state.pointer, state.camera)
-
+    
     const intersects = state.raycaster.intersectObject(transparentMesh.current)
     const elapsed = state.clock.getElapsedTime()
 
     currentPoint.current = currentPoint.current.lerp(
       new THREE.Vector3(
-        intersects[0]?.point.x || 0,
+        intersects[0]?.point.x + 3 || 0,
         intersects[0]?.point.y || 0,
         intersects[0]?.point.z || 0
       ),
@@ -236,7 +237,7 @@ const SphereBrowser = () => {
   })
 
   return (
-    <>
+    <group position={[-3, 0, 0]} >
       <mesh ref={transparentMesh}>
         <sphereGeometry args={[3.2, 100, 100]} />
         <meshBasicMaterial
@@ -254,7 +255,7 @@ const SphereBrowser = () => {
           vertexColors
         />
       </points>
-    </>
+    </group>
   )
 }
 export default SphereContainer
