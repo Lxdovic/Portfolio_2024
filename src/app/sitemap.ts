@@ -1,4 +1,4 @@
-import { MetadataRoute } from 'next'
+import {MetadataRoute} from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -10,6 +10,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: 'https://lxdovic.fr/projects/chess-challenge',
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://lxdovic.fr/projects/chess-engine',
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.8,
