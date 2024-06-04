@@ -61,8 +61,8 @@ export const CardContainerMobile = ({
           transformStyle: 'preserve-3d',
         }}
         animate={{
-          rotateY: -orientation?.gamma || 0,
-          rotateX: orientation?.beta - 45 || 0,
+          rotateY: (-orientation?.gamma || 0) * 2,
+          rotateX: (orientation?.beta - 45 || 0) * 2,
         }}>
         {children}
       </motion.div>
