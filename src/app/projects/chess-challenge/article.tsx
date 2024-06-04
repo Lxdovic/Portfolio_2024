@@ -3,16 +3,31 @@
 import React from 'react'
 import Image from 'next/image'
 import chessChallengeImage from '@/assets/images/chess-challenge/chess-challenge.png'
+import Link from 'next/link'
+import {Button} from '@/components/ui/button'
+import {Icon} from '@iconify/react'
 
 const ChessChallengeArticle = () => {
   return (
     <>
-      <h1 className="font-['AlmarenaDisplayBold'] text-5xl uppercase">
+      <h1 className="flex h-10 w-full items-center justify-between font-['AlmarenaDisplayBold'] text-5xl uppercase">
         Chess Challenge
+        <Link
+          href="https://github.com/Lxdovic/Chess-Challenge"
+          className="flex aspect-square h-full">
+          <Button
+            variant="ghost"
+            className="aspect-square h-full p-0">
+            <Icon
+              height={24}
+              icon="mdi:github"
+            />
+          </Button>
+        </Link>
       </h1>
 
       <Image
-        className="rounded-lg"
+        className="w-full rounded-lg"
         src={chessChallengeImage}
         alt=""
       />
@@ -72,8 +87,8 @@ const ChessChallengeArticle = () => {
 
       <p>
         And to my surprise, my bot {'"Lxna"'}, barely made the playoffs (top63)
-        and was showcased in Sebastian`&apos;s video against smol.cs which would later
-        finish top 2 in the tournament.
+        and was showcased in Sebastian`&apos;s video against smol.cs which would
+        later finish top 2 in the tournament.
       </p>
 
       <p>

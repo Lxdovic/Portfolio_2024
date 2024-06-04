@@ -7,7 +7,6 @@ export type Project = {
 }
 
 import abstract1 from '@/assets/images/abstract1.jpg'
-import chessChallenge from '@/assets/images/chess-challenge/chess-challenge.png'
 import chessEngine from '@/assets/images/chess1.png'
 import abstract2 from '@/assets/images/abstract2.jpg'
 import abstract3 from '@/assets/images/abstract3.jpg'
@@ -24,7 +23,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Chess Engine',
-    href: 'https://github.com/Lxdovic/Lxna',
+    href: '/projects/chess-engine',
     image: chessEngine,
     alt: 'Chess board with pieces on it',
     description:
