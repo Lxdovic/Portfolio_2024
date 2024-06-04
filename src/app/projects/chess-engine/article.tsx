@@ -40,25 +40,26 @@ const ChessEngineArticle = () => {
           {' Chess Challenge by Sebastian Lague. '}
         </Link>
         It was a fun experience and I learned a lot about chess programming and
-        algorithms in general. And after the challenge was over, i couldn't help
-        but to think about chess programming. I was fascinated by the idea of
-        building a chess engine from scratch. So I decided to give it a try.
+        algorithms in general. And after the challenge was over, i couldn&apos;t
+        help but to think about chess programming. I was fascinated by the idea
+        of building a chess engine from scratch. So I decided to give it a try.
       </p>
 
       <p>
-        Now you may wonder what's the difference between the bot I created
+        Now you may wonder what&apos;s the difference between the bot I created
         during this challenge and an actual chess engine?
       </p>
 
       <p>
-        My bot was built on top of a chess API, which means that I didn't have
-        to implement the rules of chess, move generation, check and checkmate
-        detection and so on... I only had to implement the logic of the bot
-        itself. On the other hand, a chess engine is a standalone program that
-        does all of that. It's a complete chess program that can play without
-        any external help. Chess engines also use a protocol for communication
-        with graphical user interfaces, so that they can be used to play against
-        humans. This protocol is called UCI (Universal Chess Interface).
+        My bot was built on top of a chess API, which means that I didn&apos;t
+        have to implement the rules of chess, move generation, check and
+        checkmate detection and so on... I only had to implement the logic of
+        the bot itself. On the other hand, a chess engine is a standalone
+        program that does all of that. It&apos;s a complete chess program that
+        can play without any external help. Chess engines also use a protocol
+        for communication with graphical user interfaces, so that they can be
+        used to play against humans. This protocol is called UCI (Universal
+        Chess Interface).
       </p>
 
       <p>
