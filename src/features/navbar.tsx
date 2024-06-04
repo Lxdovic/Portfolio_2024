@@ -31,6 +31,8 @@ import {
 import {Button} from '@/components/ui/button'
 import {Icon} from '@iconify/react'
 import profilePicture from '@/assets/images/pfp.jpeg'
+import RotatingPhone from '@/components/rotating-phone'
+import {Dialog, DialogContent} from '@/components/ui/dialog'
 
 export function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0)
@@ -96,29 +98,29 @@ const NavItemsMobile = () => {
 
   return (
     <>
-      {/*<Dialog open={isOpen && isMobile}>*/}
-      {/*  <DialogContent className="top-0 w-[calc(100vw-1rem)] translate-y-4 rounded-md">*/}
-      {/*    <div className="flex gap-6">*/}
-      {/*      <RotatingPhone width={120} />*/}
+      <Dialog open={isOpen && isMobile}>
+        <DialogContent className="top-0 w-[calc(100vw-1rem)] translate-y-4 rounded-md">
+          <div className="flex gap-6">
+            <RotatingPhone width={120} />
 
-      {/*      <div className="flex flex-col gap-4">*/}
-      {/*        <p className="text-xl font-semibold">Rotate your phone!</p>*/}
-      {/*        <p className="text-white/80">*/}
-      {/*          {`Some animations are using your phone's gyroscope, rotate your*/}
-      {/*            phone for a better experience!`}*/}
-      {/*        </p>*/}
+            <div className="flex flex-col gap-4">
+              <p className="text-xl font-semibold">Rotate your phone!</p>
+              <p className="text-white/80">
+                {`Some animations are using your phone's gyroscope, rotate your
+                  phone for a better experience!`}
+              </p>
 
-      {/*        <Button*/}
-      {/*          type="submit"*/}
-      {/*          variant="outline"*/}
-      {/*          className="mt-auto"*/}
-      {/*          onClick={() => setIsOpen(false)}>*/}
-      {/*          Got it!*/}
-      {/*        </Button>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*  </DialogContent>*/}
-      {/*</Dialog>*/}
+              <Button
+                type="submit"
+                variant="outline"
+                className="mt-auto"
+                onClick={() => setIsOpen(false)}>
+                Got it!
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Drawer>
         <DrawerTrigger

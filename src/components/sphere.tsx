@@ -4,7 +4,6 @@ import {Canvas, useFrame} from '@react-three/fiber'
 import * as THREE from 'three'
 import {useLayoutEffect, useRef, useState} from 'react'
 import {isBrowser, isMobile} from 'react-device-detect'
-import {OrbitControls} from '@react-three/drei'
 
 const SphereContainer = () => {
   return (
@@ -63,10 +62,10 @@ const SphereMobile = () => {
     if (!target.current) return
 
     const gammaRad = THREE.MathUtils.degToRad(
-      map(orientation?.gamma - 30 || 0, -90, 90, 0, 360)
+      map((orientation?.gamma - 30 || 0) * 2, -90, 90, 0, 360)
     )
     const betaRad = THREE.MathUtils.degToRad(
-      map(orientation?.beta || 0, -180, 180, 0, 360)
+      map((orientation?.beta || 0) * 2, -180, 180, 0, 360)
     )
     const cameraRadius = 8
 
@@ -154,14 +153,14 @@ const SphereBrowser = () => {
     if (!colors.current) return
     if (!currentPoint.current) return
     if (!target.current) return
-    
+
     state.camera.position.x =
       -1 + currentMouse.current.lerp(state.pointer, 0.03).x * 2
     state.camera.position.y =
       4 + currentMouse.current.lerp(state.pointer, 0.03).y * 2
     state.camera.lookAt(0, 0, 0)
     state.raycaster.setFromCamera(state.pointer, state.camera)
-    
+
     const intersects = state.raycaster.intersectObject(transparentMesh.current)
     const elapsed = state.clock.getElapsedTime()
 
@@ -237,7 +236,7 @@ const SphereBrowser = () => {
   })
 
   return (
-    <group position={[-3, 0, 0]} >
+    <group position={[-3, 0, 0]}>
       <mesh ref={transparentMesh}>
         <sphereGeometry args={[3.2, 100, 100]} />
         <meshBasicMaterial
