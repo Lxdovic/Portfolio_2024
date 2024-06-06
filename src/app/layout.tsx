@@ -5,8 +5,7 @@ import React from 'react'
 import {cn} from '@/lib/utils'
 import {Toaster} from '@/components/ui/sonner'
 import Footer from '@/features/footer'
-import { Analytics } from '@vercel/analytics/react'
-import Head from 'next/head'
+import {Analytics} from '@vercel/analytics/react'
 import './globals.css'
 
 const fontSans = Inter({subsets: ['latin']})
@@ -26,18 +25,6 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
       className="scroll-smooth">
-      <Head>
-        <title>Ludovic Debever</title>
-        <meta charSet={'utf-8'} />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1"
-        />
-        <meta
-          name="description"
-          content={metadata.description as string}
-        />
-      </Head>
       <body
         className={cn(fontSans.className, 'w-full')}
         suppressHydrationWarning>
