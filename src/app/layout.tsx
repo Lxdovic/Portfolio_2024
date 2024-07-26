@@ -6,6 +6,7 @@ import {cn} from '@/lib/utils'
 import {Toaster} from '@/components/ui/sonner'
 import Footer from '@/features/footer'
 import {Analytics} from '@vercel/analytics/react'
+import {SpeedInsights} from '@vercel/speed-insights/next'
 import './globals.css'
 
 const fontSans = Inter({subsets: ['latin']})
@@ -29,6 +30,8 @@ export default function RootLayout({
         className={cn(fontSans.className, 'w-full')}
         suppressHydrationWarning>
         <Analytics />
+        <SpeedInsights />
+
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -37,7 +40,6 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
         <Toaster />
-
         <Footer />
       </body>
     </html>
