@@ -10,7 +10,6 @@ import {
   CardItemMobile,
 } from '@/components/ui/3d-card-mobile'
 import {CardBody, CardContainer, CardItem} from '@/components/ui/3d-card'
-import {Button} from '@/components/ui/button'
 import {cn} from '@/lib/utils'
 import AnimatedText from '@/components/animated-text'
 import {isBrowser, isMobile} from 'react-device-detect'
@@ -25,6 +24,7 @@ import {
 import {useScreenDetector} from '@/lib/useScreenDetector'
 import RotatingPhone from '@/components/rotating-phone'
 import Link from 'next/link'
+import {LinkProps} from 'next/dist/client/link'
 
 const Projects = () => {
   const [isHydrated, setIsHydrated] = useState(true)
@@ -226,95 +226,81 @@ const ProjectsBrowser = () => {
                     ease: [0.75, 0, 0.35, 1],
                   },
                 }}>
-                <CardContainer
-                  className="inter-var"
-                  rotationStrength={80}>
-                  <CardBody
-                    className={cn(
-                      'group/card relative h-full w-full rounded-xl p-6 transition-shadow',
-                      isCurrentProject
-                        ? 'hover:shadow-[0px_0px_100px_0px_#7424FF33]'
-                        : 'cursor-pointer '
-                    )}>
-                    <CardItem
-                      translateZ="50"
-                      className="w-full overflow-hidden text-5xl font-bold text-neutral-600 dark:text-white">
-                      <AnimatePresence>
-                        <motion.h2
-                          key={'projectTitle' + index}
-                          className="z-10 truncate text-clip  font-['AlmarenaDisplayBold'] font-extrabold uppercase leading-tight tracking-tight text-white drop-shadow-xl xl:text-[4.2rem]"
-                          initial={{opacity: 0}}
-                          animate={{
-                            opacity: isCurrentProject ? 1 : 0,
-                            transition: {
-                              delay: 0.5,
-                            },
-                          }}
-                          exit={{opacity: 0}}
-                          style={{
-                            mixBlendMode: 'difference',
-                            textShadow: '0px 0px 4px rgba(0,0,0,1)',
-                          }}>
-                          {project.title}
-                        </motion.h2>
-                      </AnimatePresence>
-                    </CardItem>
-                    <CardItem
-                      translateZ="50"
-                      className="mt-2 max-w-sm text-sm text-neutral-500 dark:text-neutral-300">
-                      <AnimatePresence>
-                        <motion.h2
-                          key={'projectTitle' + index}
-                          className="text-md z-10 tracking-tight text-white drop-shadow-xl"
-                          initial={{opacity: 0}}
-                          animate={{
-                            opacity: isCurrentProject ? 1 : 0,
-                            transition: {
-                              delay: 0.5,
-                            },
-                          }}
-                          exit={{opacity: 0}}
-                          style={{
-                            mixBlendMode: 'difference',
-                            textShadow: '0px 0px 4px rgba(0,0,0,1)',
-                          }}>
-                          {project.description}
-                        </motion.h2>
-                      </AnimatePresence>
-                    </CardItem>
-                    <CardItem
-                      translateZ="80"
-                      className="absolute bottom-6 right-6">
-                      <motion.div
-                        initial={{opacity: 0}}
-                        animate={{
-                          opacity: isCurrentProject ? 1 : 0,
-                          transition: {
-                            delay: 0.5,
-                          },
-                        }}>
-                        <Link href={project.href}>
-                          <Button
-                            variant="outline"
-                            className="border-white/40 bg-black/20">
-                            View {'->'}
-                          </Button>
-                        </Link>
-                      </motion.div>
-                    </CardItem>
-                    <CardItem
-                      translateZ="0"
-                      className="absolute left-0 top-0 -z-10 h-full w-full">
-                      <Image
-                        src={project.image}
-                        height="1000"
-                        width="1000"
-                        className="cover h-full w-full rounded-xl object-cover group-hover/card:shadow-xl"
-                        alt={project.alt}
-                      />
-                    </CardItem>
-                  </CardBody>
-                </CardContainer>
+                <ProjectLink
+                  disabled={!isCurrentProject}
+                  href={project.href}>
+                  <CardContainer
+                    className="inter-var"
+                    rotationStrength={80}>
+                    <CardBody
+                      className={cn(
+                        'group/card relative h-full w-full rounded-xl p-6 transition-shadow',
+                        isCurrentProject
+                          ? 'hover:shadow-[0px_0px_100px_0px_#7424FF33]'
+                          : 'cursor-default'
+                      )}>
+                      <CardItem
+                        translateZ="50"
+                        className="w-full overflow-hidden text-5xl font-bold text-neutral-600 dark:text-white">
+                        <AnimatePresence>
+                          <motion.h2
+                            key={'projectTitle' + index}
+                            className="z-10 truncate text-clip  font-['AlmarenaDisplayBold'] font-extrabold uppercase leading-tight tracking-tight text-white drop-shadow-xl xl:text-[4.2rem]"
+                            initial={{opacity: 0}}
+                            animate={{
+                              opacity: isCurrentProject ? 1 : 0,
+                              transition: {
+                                delay: 0.5,
+                              },
+                            }}
+                            exit={{opacity: 0}}
+                            style={{
+                              mixBlendMode: 'difference',
+                              textShadow: '0px 0px 4px rgba(0,0,0,1)',
+                            }}>
+                            {project.title}
+                          </motion.h2>
+                        </AnimatePresence>
+                      </CardItem>
+                      <CardItem
+                        translateZ="50"
+                        className="mt-2 max-w-sm text-sm text-neutral-500 dark:text-neutral-300">
+                        <AnimatePresence>
+                          <motion.h2
+                            key={'projectTitle' + index}
+                            className="text-md z-10 tracking-tight text-white drop-shadow-xl"
+                            initial={{opacity: 0}}
+                            animate={{
+                              opacity: isCurrentProject ? 1 : 0,
+                              transition: {
+                                delay: 0.5,
+                              },
+                            }}
+                            exit={{opacity: 0}}
+                            style={{
+                              mixBlendMode: 'difference',
+                              textShadow: '0px 0px 4px rgba(0,0,0,1)',
+                            }}>
+                            {project.description}
+                          </motion.h2>
+                        </AnimatePresence>
+                      </CardItem>
+                      <CardItem
+                        translateZ="0"
+                        className="absolute left-0 top-0 -z-10 h-full w-full">
+                        <Image
+                          src={project.image}
+                          height="1000"
+                          width="1000"
+                          className="cover h-full w-full rounded-xl object-cover group-hover/card:shadow-xl"
+                          alt={project.alt}
+                        />
+
+                        <div className="absolute left-0 top-0 h-full w-full rounded-xl border border-white/20 shadow-[inset_0_-0px_40px_rgba(0,0,0,1)]" />
+                      </CardItem>
+                    </CardBody>
+                  </CardContainer>
+                </ProjectLink>
               </motion.div>
             )
           })}
@@ -322,6 +308,17 @@ const ProjectsBrowser = () => {
       </motion.div>
     </motion.section>
   )
+}
+
+type ProjectLinkProps = {
+  children: React.ReactNode
+  disabled: boolean
+} & LinkProps
+
+const ProjectLink = ({children, disabled, ...props}: ProjectLinkProps) => {
+  if (disabled) return <>{children}</>
+
+  return <Link {...props}>{children}</Link>
 }
 
 export default Projects
