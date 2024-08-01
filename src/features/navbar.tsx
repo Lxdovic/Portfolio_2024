@@ -150,7 +150,7 @@ const NavItemsMobile = () => {
                   Ludovic Debever
                 </DrawerTitle>
                 <DrawerDescription className="text-start">
-                  Student & Half-time software engineer @Holis
+                  Student & Part-time software engineer @Holis
                 </DrawerDescription>
               </div>
             </DrawerHeader>
@@ -183,14 +183,7 @@ const NavItemsBrowser = () => {
       initial={{y: -100, opacity: 0}}
       animate={{y: 0, opacity: 1, transition: {ease: 'easeInOut'}}}
       exit={{opacity: 0}}
-      className="fixed top-0 z-50 flex h-12 w-full justify-center">
-      <Link
-        tabIndex={0}
-        href="/#home"
-        className="absolute left-6 mr-auto flex h-12 items-center font-['AlmarenaDisplayBold'] uppercase">
-        Ludovic Debever
-      </Link>
-
+      className="fixed top-0 z-50 m-4 flex h-12 w-max justify-center self-center rounded-full border bg-white/5 px-4 backdrop-blur-lg">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
