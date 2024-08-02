@@ -17,16 +17,6 @@ import {
 import {AnimatePresence} from 'framer-motion'
 import {projects} from '@/data/projects'
 import {isMobile} from 'react-device-detect'
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/ui/drawer'
 import {Button} from '@/components/ui/button'
 import {Icon} from '@iconify/react'
 import profilePicture from '@/assets/images/pfp.jpeg'
@@ -51,63 +41,6 @@ export function Navbar() {
     <AnimatePresence>
       <NavItemsBrowser />
     </AnimatePresence>
-  )
-}
-
-const NavItemsMobile = () => {
-  return (
-    <>
-      <Drawer>
-        <DrawerTrigger
-          asChild
-          className="fixed left-2 top-2 z-50 flex h-12 text-white shadow-none outline-0 ring-0">
-          <Button
-            variant="ghost"
-            className="h-max p-2 outline-0">
-            <Icon
-              icon="bx:menu-alt-left"
-              height={40}
-            />
-          </Button>
-        </DrawerTrigger>
-        <DrawerContent className="z-50">
-          <div className="mx-auto w-full max-w-sm">
-            <DrawerHeader className="flex justify-between gap-4">
-              <Image
-                height="70"
-                width="70"
-                className="rounded-full"
-                src={profilePicture}
-                alt="Ludovic Debever"
-              />
-              <div className="flex flex-col items-start justify-center gap-2">
-                <DrawerTitle className="text-start">
-                  Ludovic Debever
-                </DrawerTitle>
-                <DrawerDescription className="text-start">
-                  Student & Part-time software engineer @Holis
-                </DrawerDescription>
-              </div>
-            </DrawerHeader>
-            <div className="p-4 pb-0">
-              {`Hey, I'm Ludovic, a 23-year-old french student passionate about
-              code. I am currently studying at Epitech Paris, and working at
-              Holis, a SaaS startup based at Station F.`}
-            </div>
-
-            <DrawerFooter>
-              <DrawerClose asChild>
-                <Button
-                  variant="outline"
-                  className="w-full">
-                  Close
-                </Button>
-              </DrawerClose>
-            </DrawerFooter>
-          </div>
-        </DrawerContent>
-      </Drawer>
-    </>
   )
 }
 
