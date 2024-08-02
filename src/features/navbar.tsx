@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import {useCallback, useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -31,24 +31,11 @@ import {
 import {Button} from '@/components/ui/button'
 import {Icon} from '@iconify/react'
 import profilePicture from '@/assets/images/pfp.jpeg'
-import RotatingPhone from '@/components/rotating-phone'
-import {Dialog, DialogContent} from '@/components/ui/dialog'
 
 export function Navbar() {
-  const [lastScrollY, setLastScrollY] = useState(0)
-  const [isOpen, setIsOpen] = useState(true)
   const [isHydrated, setIsHydrated] = useState(false)
   const {isTablet} = useScreenDetector()
   const hasWarningBeenDisplayed = React.useRef(false)
-
-  const handleDisplayNavbar = useCallback(() => {
-    if (isMobile) return setIsOpen(true)
-
-    if (typeof window !== 'undefined') {
-      setIsOpen(window.scrollY <= lastScrollY)
-      setLastScrollY(window.scrollY)
-    }
-  }, [lastScrollY])
 
   useEffect(() => {
     if (
@@ -58,70 +45,32 @@ export function Navbar() {
       !hasWarningBeenDisplayed.current
     ) {
       hasWarningBeenDisplayed.current = true
-
-      // toast.custom((id) => (
-      //   <div className="flex gap-4 rounded-md border p-4">
-      //     <p className="text-sm text-white/80">
-      //       {`It seems like you're trying to view the mobile version of this site on the wrong device.
-      //       Go grab your phone, and enjoy the cool features this site has to offer for mobile users!`}
-      //     </p>
-      //     <Button
-      //       variant="outline"
-      //       onClick={() => toast.dismiss(id)}
-      //       className="self-end">
-      //       Dismiss
-      //     </Button>
-      //   </div>
-      // ))
     }
   }, [isHydrated, isTablet])
 
   useEffect(() => {
     setIsHydrated(true)
-    window.addEventListener('scroll', handleDisplayNavbar)
-
-    return () => {
-      window.removeEventListener('scroll', handleDisplayNavbar)
-    }
-  }, [handleDisplayNavbar, isTablet])
+  }, [isTablet])
 
   if (!isHydrated) return null
 
   if (isMobile || isTablet)
-    return <AnimatePresence>{isOpen && <NavItemsMobile />}</AnimatePresence>
+    return (
+      <AnimatePresence>
+        <NavItemsMobile />
+      </AnimatePresence>
+    )
   if (isBrowser)
-    return <AnimatePresence>{isOpen && <NavItemsBrowser />}</AnimatePresence>
+    return (
+      <AnimatePresence>
+        <NavItemsBrowser />
+      </AnimatePresence>
+    )
 }
 
 const NavItemsMobile = () => {
-  const [isOpen, setIsOpen] = useState(true)
-
   return (
     <>
-      <Dialog open={isOpen && isMobile}>
-        <DialogContent className="top-0 w-[calc(100vw-1rem)] translate-y-4 rounded-md">
-          <div className="flex gap-6">
-            <RotatingPhone width={120} />
-
-            <div className="flex flex-col gap-4">
-              <p className="text-xl font-semibold">Rotate your phone!</p>
-              <p className="text-white/80">
-                {`Some animations are using your phone's gyroscope, rotate your
-                  phone for a better experience!`}
-              </p>
-
-              <Button
-                type="submit"
-                variant="outline"
-                className="mt-auto"
-                onClick={() => setIsOpen(false)}>
-                Got it!
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
       <Drawer>
         <DrawerTrigger
           asChild
@@ -183,7 +132,7 @@ const NavItemsBrowser = () => {
       initial={{y: -100, opacity: 0}}
       animate={{y: 0, opacity: 1, transition: {ease: 'easeInOut'}}}
       exit={{opacity: 0}}
-      className="fixed top-0 z-50 m-4 flex h-12 w-max justify-center self-center rounded-full border bg-white/5 px-4 backdrop-blur-lg">
+      className="fixed top-0 z-50 m-4 flex h-12 w-max justify-center self-center rounded-full border bg-white/5 px-4 backdrop-blur-sm">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
