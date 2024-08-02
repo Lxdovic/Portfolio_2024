@@ -40,10 +40,12 @@ const SphereMobile = () => {
 
   const [orientation, setOrientation] = useState<any>()
   const onDeviceOrientation = (event: DeviceOrientationEvent) => {
+    if (event.beta === null || event.gamma === null) return
+
     setOrientation({
       alpha: event.alpha,
-      beta: event.beta,
-      gamma: event.gamma,
+      beta: Math.min(Math.max(event.beta, 25), 65),
+      gamma: Math.min(Math.max(event.gamma, -25), 25),
     })
   }
 
@@ -62,10 +64,10 @@ const SphereMobile = () => {
     if (!target.current) return
 
     const gammaRad = THREE.MathUtils.degToRad(
-      map((orientation?.gamma - 30 || 0) * 2, -90, 90, 0, 360)
+      map(orientation?.gamma - 30 || 0, -90, 90, 0, 360)
     )
     const betaRad = THREE.MathUtils.degToRad(
-      map((orientation?.beta || 0) * 2, -180, 180, 0, 360)
+      map(orientation?.beta || 0, -180, 180, 0, 360)
     )
     const cameraRadius = 8
 
