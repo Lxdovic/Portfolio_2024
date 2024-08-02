@@ -296,7 +296,7 @@ const ProjectsBrowser = () => {
                           alt={project.alt}
                         />
 
-                        <div className="absolute left-0 top-0 h-full w-full rounded-xl border border-white/20 shadow-[inset_0_-0px_40px_rgba(0,0,0,1)]" />
+                        <div className="absolute left-0 top-0 h-full w-full rounded-xl border border-white/20 shadow-[inset_0_-0px_40px_rgba(0,0,0,0.5)]" />
                       </CardItem>
                     </CardBody>
                   </CardContainer>
