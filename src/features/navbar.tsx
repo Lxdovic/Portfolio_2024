@@ -16,112 +16,27 @@ import {
 } from '@/components/ui/navigation-menu'
 import {AnimatePresence} from 'framer-motion'
 import {projects} from '@/data/projects'
-import {isBrowser, isMobile} from 'react-device-detect'
-import {useScreenDetector} from '@/lib/useScreenDetector'
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/ui/drawer'
+import {isMobile} from 'react-device-detect'
 import {Button} from '@/components/ui/button'
 import {Icon} from '@iconify/react'
 import profilePicture from '@/assets/images/pfp.jpeg'
 
 export function Navbar() {
   const [isHydrated, setIsHydrated] = useState(false)
-  const {isTablet} = useScreenDetector()
   const hasWarningBeenDisplayed = React.useRef(false)
 
   useEffect(() => {
-    if (
-      isTablet &&
-      isHydrated &&
-      !isMobile &&
-      !hasWarningBeenDisplayed.current
-    ) {
+    if (isHydrated && !isMobile && !hasWarningBeenDisplayed.current) {
       hasWarningBeenDisplayed.current = true
     }
-  }, [isHydrated, isTablet])
-
-  useEffect(() => {
-    setIsHydrated(true)
-  }, [isTablet])
+  }, [isHydrated])
 
   if (!isHydrated) return null
 
-  if (isMobile || isTablet)
-    return (
-      <AnimatePresence>
-        <NavItemsMobile />
-      </AnimatePresence>
-    )
-  if (isBrowser)
-    return (
-      <AnimatePresence>
-        <NavItemsBrowser />
-      </AnimatePresence>
-    )
-}
-
-const NavItemsMobile = () => {
   return (
-    <>
-      <Drawer>
-        <DrawerTrigger
-          asChild
-          className="fixed left-2 top-2 z-50 flex h-12 text-white shadow-none outline-0 ring-0">
-          <Button
-            variant="ghost"
-            className="h-max p-2 outline-0">
-            <Icon
-              icon="bx:menu-alt-left"
-              height={40}
-            />
-          </Button>
-        </DrawerTrigger>
-        <DrawerContent className="z-50">
-          <div className="mx-auto w-full max-w-sm">
-            <DrawerHeader className="flex justify-between gap-4">
-              <Image
-                height="70"
-                width="70"
-                className="rounded-full"
-                src={profilePicture}
-                alt="Ludovic Debever"
-              />
-              <div className="flex flex-col items-start justify-center gap-2">
-                <DrawerTitle className="text-start">
-                  Ludovic Debever
-                </DrawerTitle>
-                <DrawerDescription className="text-start">
-                  Student & Part-time software engineer @Holis
-                </DrawerDescription>
-              </div>
-            </DrawerHeader>
-            <div className="p-4 pb-0">
-              {`Hey, I'm Ludovic, a 23-year-old french student passionate about
-              code. I am currently studying at Epitech Paris, and working at
-              Holis, a SaaS startup based at Station F.`}
-            </div>
-
-            <DrawerFooter>
-              <DrawerClose asChild>
-                <Button
-                  variant="outline"
-                  className="w-full">
-                  Close
-                </Button>
-              </DrawerClose>
-            </DrawerFooter>
-          </div>
-        </DrawerContent>
-      </Drawer>
-    </>
+    <AnimatePresence>
+      <NavItemsBrowser />
+    </AnimatePresence>
   )
 }
 
@@ -129,7 +44,7 @@ const NavItemsBrowser = () => {
   return (
     <div
       key="navbar"
-      className="fixed top-0 z-50 m-4 flex h-12 w-64 justify-center self-center rounded-full px-4 before:absolute before:h-full before:w-64 before:rounded-full before:border before:border-white/10 before:bg-white/5 before:backdrop-blur-md before:content-['']">
+      className="fixed top-0 z-50 m-4 flex h-12 w-64 justify-center self-center rounded-full px-4 before:absolute before:h-full before:w-64 before:rounded-full before:border before:border-white/10 before:bg-gray-700/35 before:backdrop-blur-md before:content-['']">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -148,29 +63,27 @@ const NavItemsBrowser = () => {
               About
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="flex gap-3 p-4 md:w-[400px] lg:w-[500px]">
+              <ul className="flex flex-col gap-3 p-6 md:w-[400px] md:flex-row lg:w-[500px]">
                 <li className="w-64">
                   <NavigationMenuLink asChild>
                     <Link
-                      className="flex h-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                      className="flex h-full select-none flex-col justify-between rounded-md no-underline outline-none"
                       href="/">
                       <Image
-                        height="80"
-                        width="80"
-                        className="rounded-full"
+                        className="h-20 w-20 rounded-full md:h-32 md:w-32"
                         src={profilePicture}
                         alt="Ludovic Debever"
                       />
                       <div className="mb-2 mt-4 text-lg font-medium">
                         Ludovic Debever
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          Software Architect, Fullstack Developer
+                        </p>
                       </div>
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Software Architect, Fullstack Developer
-                      </p>
                     </Link>
                   </NavigationMenuLink>
                 </li>
-                <div className="flex w-3/5 flex-col gap-4">
+                <div className="flex w-full flex-col gap-4 md:w-3/5">
                   <p className="flex h-full text-sm text-white/80">
                     {`Hey, I'm Ludovic, a 23-year-old french student passionate about
                 code. I am currently studying at Epitech Paris, and working at

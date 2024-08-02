@@ -28,9 +28,11 @@ export const CardContainerMobile = ({
 
     lastOrientationMove.current = performance.now()
 
+    if (event.beta === null || event.gamma === null) return
+
     setOrientation({
-      beta: event.beta,
-      gamma: event.gamma,
+      beta: Math.min(Math.max(event.beta, 25), 65),
+      gamma: Math.min(Math.max(event.gamma, -25), 25),
     })
   }
 
