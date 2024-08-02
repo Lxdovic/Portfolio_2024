@@ -14,7 +14,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu'
-import {AnimatePresence, motion} from 'framer-motion'
+import {AnimatePresence} from 'framer-motion'
 import {projects} from '@/data/projects'
 import {isBrowser, isMobile} from 'react-device-detect'
 import {useScreenDetector} from '@/lib/useScreenDetector'
@@ -127,12 +127,9 @@ const NavItemsMobile = () => {
 
 const NavItemsBrowser = () => {
   return (
-    <motion.div
+    <div
       key="navbar"
-      initial={{y: -100, opacity: 0}}
-      animate={{y: 0, opacity: 1, transition: {ease: 'easeInOut'}}}
-      exit={{opacity: 0}}
-      className="fixed top-0 z-50 m-4 flex h-12 w-max justify-center self-center rounded-full border bg-white/5 px-4 backdrop-blur-sm">
+      className="fixed top-0 z-50 m-4 flex h-12 w-64 justify-center self-center rounded-full px-4 before:absolute before:h-full before:w-64 before:rounded-full before:border before:border-white/10 before:bg-white/5 before:backdrop-blur-md before:content-['']">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -176,8 +173,8 @@ const NavItemsBrowser = () => {
                 <div className="flex w-3/5 flex-col gap-4">
                   <p className="flex h-full text-sm text-white/80">
                     {`Hey, I'm Ludovic, a 23-year-old french student passionate about
-              code. I am currently studying at Epitech Paris, and working at
-              Holis, a SaaS startup based at Station F.`}
+                code. I am currently studying at Epitech Paris, and working at
+                Holis, a SaaS startup based at Station F.`}
                   </p>
 
                   <p className="flex h-full text-sm text-white/80">
@@ -230,7 +227,7 @@ const NavItemsBrowser = () => {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-    </motion.div>
+    </div>
   )
 }
 
