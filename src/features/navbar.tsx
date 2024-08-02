@@ -31,6 +31,10 @@ export function Navbar() {
     }
   }, [isHydrated])
 
+  useEffect(() => {
+    setIsHydrated(true)
+  }, [])
+
   if (!isHydrated) return null
 
   return (
