@@ -39,7 +39,7 @@ export const projects: Project[] = [
       'A chess engine I built from scratch. Utilizing many chess engine techniques such as bitboards, magic bitboards, negamax, alpha-beta pruning, quiescence search, transposition tables, null move pruning, and more.',
   },
   {
-    title: 'Rhino',
+    title: 'Compiler',
     href: 'https://github.com/Lxdovic/Rhino',
     image: abstract2,
     alt: 'Abstract purple and pink background',
