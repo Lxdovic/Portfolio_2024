@@ -1,7 +1,7 @@
 'use client'
 
 import React, {useEffect, useRef, useState} from 'react'
-import {AnimatePresence, motion} from 'framer-motion'
+import {motion} from 'framer-motion'
 import {projects} from '@/data/projects'
 import Image from 'next/image'
 import {
@@ -242,48 +242,43 @@ const ProjectsBrowser = () => {
                       <CardItem
                         translateZ="50"
                         className="w-full overflow-hidden text-5xl font-bold text-neutral-600 dark:text-white">
-                        <AnimatePresence>
-                          <motion.h2
-                            key={'projectTitle' + index}
-                            className="z-10 truncate text-clip  font-['AlmarenaDisplayBold'] font-extrabold uppercase leading-tight tracking-tight text-white drop-shadow-xl xl:text-[4.2rem]"
-                            initial={{opacity: 0}}
-                            animate={{
-                              opacity: isCurrentProject ? 1 : 0,
-                              transition: {
-                                delay: 0.5,
-                              },
-                            }}
-                            exit={{opacity: 0}}
-                            style={{
-                              mixBlendMode: 'difference',
-                              textShadow: '0px 0px 4px rgba(0,0,0,1)',
-                            }}>
-                            {project.title}
-                          </motion.h2>
-                        </AnimatePresence>
+                        <motion.h2
+                          key={'projectTitle' + index}
+                          className="z-10 truncate text-clip  font-['AlmarenaDisplayBold'] font-extrabold uppercase leading-tight tracking-tight text-white drop-shadow-xl xl:text-[4.2rem]"
+                          initial={{opacity: isCurrentProject ? 0 : 1}}
+                          animate={{
+                            opacity: isCurrentProject ? 1 : 0,
+                            transition: {
+                              delay: 0.5,
+                            },
+                          }}
+                          exit={{opacity: 0}}
+                          style={{
+                            mixBlendMode: 'difference',
+                            textShadow: '0px 0px 4px rgba(0,0,0,1)',
+                          }}>
+                          {project.title}
+                        </motion.h2>
                       </CardItem>
                       <CardItem
                         translateZ="50"
                         className="mt-2 max-w-sm text-sm text-neutral-500 dark:text-neutral-300">
-                        <AnimatePresence>
-                          <motion.h2
-                            key={'projectTitle' + index}
-                            className="text-md z-10 tracking-tight text-white drop-shadow-xl"
-                            initial={{opacity: 0}}
-                            animate={{
-                              opacity: isCurrentProject ? 1 : 0,
-                              transition: {
-                                delay: 0.5,
-                              },
-                            }}
-                            exit={{opacity: 0}}
-                            style={{
-                              mixBlendMode: 'difference',
-                              textShadow: '0px 0px 4px rgba(0,0,0,1)',
-                            }}>
-                            {project.description}
-                          </motion.h2>
-                        </AnimatePresence>
+                        <motion.h2
+                          key={'projectDescription' + index}
+                          className="text-md z-10 tracking-tight text-white drop-shadow-xl"
+                          initial={{opacity: isCurrentProject ? 0 : 1}}
+                          animate={{
+                            opacity: isCurrentProject ? 1 : 0,
+                            transition: {
+                              delay: 0.5,
+                            },
+                          }}
+                          style={{
+                            mixBlendMode: 'difference',
+                            textShadow: '0px 0px 4px rgba(0,0,0,1)',
+                          }}>
+                          {project.description}
+                        </motion.h2>
                       </CardItem>
                       <CardItem
                         translateZ="0"
