@@ -25,6 +25,7 @@ import {useScreenDetector} from '@/lib/useScreenDetector'
 import RotatingPhone from '@/components/rotating-phone'
 import Link from 'next/link'
 import {LinkProps} from 'next/dist/client/link'
+import GridPattern from '@/components/magicui/grid-pattern'
 
 const Projects = () => {
   const [isHydrated, setIsHydrated] = useState(true)
@@ -150,7 +151,7 @@ const ProjectsBrowser = () => {
       animate={{opacity: 1}}
       exit={{opacity: 0}}
       transition={{duration: 3}}
-      className="relative flex h-max min-h-screen flex-col items-center overflow-hidden bg-background pb-20">
+      className="relative flex h-max min-h-screen flex-col items-center overflow-hidden bg-background pb-40">
       <h1 className="flex flex-col py-10 pt-32 font-['AlmarenaDisplayBold'] text-[3rem] font-bold uppercase leading-[3rem] text-white sm:w-[28rem] sm:text-7xl lg:w-[36rem]  lg:text-8xl">
         <AnimatedText className="text-start text-primary">
           Selected
@@ -161,6 +162,17 @@ const ProjectsBrowser = () => {
           work
         </AnimatedText>
       </h1>
+
+      <GridPattern
+        width={30}
+        height={30}
+        x={-1}
+        y={-1}
+        strokeDasharray={'5 5'}
+        className={cn(
+          '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]'
+        )}
+      />
 
       <motion.div className="h-[50vh] min-h-[450px] w-full">
         <div

@@ -90,44 +90,33 @@ const FooterMobile = () => {
 
 const FooterBrowser = () => {
   return (
-    <footer className="flex h-max flex-col gap-6 border-t p-10 xl:px-[20rem] 2xl:px-[26rem]">
-      <div className="flex h-max w-full justify-between">
-        <div className="flex h-max gap-6">
-          <Image
-            className="h-16 w-16 rounded-full"
-            src={profilePicture}
-            alt="Ludovic Debever"
-          />
+    <footer className="flex h-max justify-between gap-6 bg-foreground/5 p-10 xl:px-[20rem] 2xl:px-[26rem]">
+      <div className="flex h-max gap-6">
+        <Image
+          className="h-16 w-16 rounded-full"
+          src={profilePicture}
+          alt="Ludovic Debever"
+        />
 
-          <div className="flex flex-col justify-center">
-            <p className="font-['AlmarenaDisplayBold'] text-xl uppercase">
-              Ludovic Debever
-            </p>
-            <p className="text-sm text-white/80">ludovicdebever0@gmail.com</p>
-          </div>
+        <div className="flex flex-col justify-center">
+          <p className="font-['AlmarenaDisplayBold'] text-xl uppercase">
+            Ludovic Debever
+          </p>
+          <p className="text-sm text-white/80">ludovicdebever0@gmail.com</p>
         </div>
-
-        <ul className="flex items-center gap-10">
-          <li className="text-white/80 transition hover:text-white hover:underline">
-            <Link href="/#home">Home</Link>
-          </li>
-          <li className="text-white/80 transition hover:text-white hover:underline">
-            <Link href="/#about">About</Link>
-          </li>
-          <li className="text-white/80 transition hover:text-white hover:underline">
-            <Link href="/#work">Work</Link>
-          </li>
-        </ul>
       </div>
 
-      <div className="flex gap-2">
-        <p className="text-white/80">
-          © 2021-2022 Ludovic Debever™. All Rights Reserved.
-        </p>
-
-        <Link
-          className="ml-auto"
-          href="https://github.com/Lxdovic">
+      <ul className="flex items-center gap-10">
+        <li className="text-white/80 transition hover:text-white hover:underline">
+          <Link href="/#home">Home</Link>
+        </li>
+        <li className="text-white/80 transition hover:text-white hover:underline">
+          <Link href="/#about">About</Link>
+        </li>
+        <li className="text-white/80 transition hover:text-white hover:underline">
+          <Link href="/#work">Work</Link>
+        </li>
+        <Link href="https://github.com/Lxdovic">
           <Button
             variant="ghost"
             className="aspect-square p-1">
@@ -148,7 +137,7 @@ const FooterBrowser = () => {
             />
           </Button>
         </Link>
-      </div>
+      </ul>
     </footer>
   )
 }
