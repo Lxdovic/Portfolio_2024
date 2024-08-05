@@ -2,8 +2,11 @@
 
 import {Canvas, useFrame} from '@react-three/fiber'
 import * as THREE from 'three'
-import {useLayoutEffect, useRef, useState} from 'react'
+import {Vector2, Vector3} from 'three'
+import {useLayoutEffect, useMemo, useRef, useState} from 'react'
 import {isBrowser, isMobile} from 'react-device-detect'
+import vertexShader from './vertex.vert'
+import fragmentShader from './fragment.frag'
 
 const SphereContainer = () => {
   return (
@@ -140,123 +143,65 @@ const SphereMobile = () => {
 }
 
 const SphereBrowser = () => {
-  const mesh: any = useRef()
+  const mesh = useRef<any>()
   const transparentMesh: any = useRef()
-  const geometry: any = useRef()
-  const positions: any = useRef([])
-  const colors: any = useRef([])
-  const currentPoint: any = useRef(new THREE.Vector3(0, 0, 0))
-  const currentMouse: any = useRef(new THREE.Vector2(0, 0))
-  const target: any = useRef(new THREE.Vector3(0, 0, 0))
+  const mousePosition = useRef(new Vector2())
 
-  useFrame((state) => {
+  const uniforms = useMemo(
+    () => ({
+      uTime: {
+        value: 0.0,
+      },
+      uMouse: {value: new Vector3(0, 0, 0)},
+    }),
+    []
+  )
+
+  useFrame(({clock, raycaster, pointer, camera}) => {
     if (!mesh.current) return
-    if (!positions.current) return
-    if (!colors.current) return
-    if (!currentPoint.current) return
-    if (!target.current) return
 
-    state.camera.position.x =
-      -1 + currentMouse.current.lerp(state.pointer, 0.03).x * 2
-    state.camera.position.y =
-      4 + currentMouse.current.lerp(state.pointer, 0.03).y * 2
-    state.camera.lookAt(0, 0, 0)
-    state.raycaster.setFromCamera(state.pointer, state.camera)
+    camera.position.x = mousePosition.current.lerp(pointer, 0.03).x * 2
+    camera.position.y = 3 + mousePosition.current.lerp(pointer, 0.03).y * 2
 
-    const intersects = state.raycaster.intersectObject(transparentMesh.current)
-    const elapsed = state.clock.getElapsedTime()
+    camera.lookAt(3, 0, 0)
 
-    currentPoint.current = currentPoint.current.lerp(
-      new THREE.Vector3(
-        intersects[0]?.point.x + 3 || 0,
-        intersects[0]?.point.y || 0,
-        intersects[0]?.point.z || 0
-      ),
-      0.1
-    )
+    raycaster.setFromCamera(pointer, camera)
+    const [intersection] = raycaster.intersectObject(transparentMesh.current)
 
-    const total = Math.PI * 20
-    const radius = 3
+    mesh.current.material.uniforms.uTime.value = clock.getElapsedTime()
+    mesh.current.rotation.y = clock.getElapsedTime() * 0.2
 
-    for (let i = 0; i < total; i++) {
-      let lon = map(i, 0, total, 0, Math.PI)
-      for (let j = 0; j < total; j++) {
-        const lat = map(j, 0, total, -Math.PI, Math.PI)
-        const animatedRadius = radius + Math.sin(lon * 15 + elapsed * 2) * 0.1
-        const animatedLat = lat + elapsed * 0.1
-
-        target.current.x =
-          animatedRadius * Math.sin(lon) * Math.cos(animatedLat)
-        target.current.y =
-          animatedRadius * Math.sin(lon) * Math.sin(animatedLat)
-        target.current.z = animatedRadius * Math.cos(lon)
-
-        const index = i * Math.round(total) + j
-        const position = new THREE.Vector3(
-          ...(positions.current[index] || [0, 0, 0])
-        )
-
-        const distance = currentPoint.current.distanceTo(target.current)
-
-        if (distance < 1.4 && state.pointer.x !== 0 && state.pointer.y !== 0) {
-          target.current.x =
-            (animatedRadius + 1.4 - distance) *
-            Math.sin(lon) *
-            Math.cos(animatedLat)
-
-          target.current.y =
-            (animatedRadius + 1.4 - distance) *
-            Math.sin(lon) *
-            Math.sin(animatedLat)
-
-          target.current.z = (animatedRadius + 1.4 - distance) * Math.cos(lon)
-        }
-
-        const finalPos = position.lerp(target.current, 0.1)
-        const color = new THREE.Color(
-          `hsl(${THREE.MathUtils.clamp(
-            360 - currentPoint.current.distanceTo(target.current) * 30,
-            240,
-            300
-          )}, 100%, 50%)`
-        )
-
-        positions.current[index] = [finalPos.x, finalPos.y, finalPos.z]
-        colors.current[index] = [color.r, color.g, color.b]
-      }
+    if (!intersection) {
+      mesh.current.material.uniforms.uMouse.value = new Vector3(0, 0, 0)
+    } else {
+      mesh.current.material.uniforms.uMouse.value = intersection.point
+        .clone()
+        .applyAxisAngle(new Vector3(0, 1, 0), -mesh.current.rotation.y)
+        .applyAxisAngle(new Vector3(1, 0, 0), -mesh.current.rotation.x)
     }
-
-    geometry.current.setAttribute(
-      'position',
-      new THREE.BufferAttribute(new Float32Array(positions.current.flat(1)), 3)
-    )
-
-    geometry.current.setAttribute(
-      'color',
-      new THREE.BufferAttribute(new Float32Array(colors.current.flat(1)), 3)
-    )
   })
 
   return (
-    <group position={[-3, 0, 0]}>
+    <>
       <mesh ref={transparentMesh}>
-        <sphereGeometry args={[3.2, 100, 100]} />
+        <sphereGeometry args={[2, 100, 100]} />
         <meshBasicMaterial
           opacity={0}
           transparent
         />
       </mesh>
 
-      <points
-        ref={mesh}
-        type="Points">
-        <bufferGeometry ref={geometry} />
-        <pointsMaterial
-          size={0.03}
-          vertexColors
+      <points ref={mesh}>
+        <sphereGeometry args={[2, 200, 200]} />
+        <shaderMaterial
+          fragmentShader={fragmentShader}
+          vertexShader={vertexShader}
+          uniforms={uniforms}
+          wireframe
         />
       </points>
-    </group>
+    </>
   )
 }
+
 export default SphereContainer

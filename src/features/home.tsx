@@ -1,5 +1,5 @@
 import React from 'react'
-import Sphere from '@/components/sphere'
+import Sphere from '@/components/sphere/sphere'
 import AnimatedText from '@/components/animated-text'
 
 const Home = () => {
