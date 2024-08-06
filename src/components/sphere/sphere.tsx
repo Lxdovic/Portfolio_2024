@@ -7,24 +7,83 @@ import {useLayoutEffect, useMemo, useRef, useState} from 'react'
 import {isBrowser, isMobile} from 'react-device-detect'
 import vertexShader from './vertex.vert'
 import fragmentShader from './fragment.frag'
+import almarenaBold from '@/assets/fonts/Almarena-Display-Bold_Regular.json'
+import almarenaLight from '@/assets/fonts/Almarena-Display-Light_Regular.json'
+
+import {MeshTransmissionMaterial, Text3D} from '@react-three/drei'
+import {RGBELoader} from 'three-stdlib'
 
 const SphereContainer = () => {
+  const texture = new RGBELoader().load(
+    'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr'
+  )
+
   return (
     <Canvas
+      shadows
       camera={{
-        position: [-4, 4, -7],
+        position: [-4, 6, -5],
+        fov: 60,
       }}>
       <fogExp2
         attach="fog"
         args={[0x09090b, 0.08]}
       />
-      <gridHelper args={[120, 120, 0x333333, 0x333333]} />
+      <gridHelper args={[100, 200, 0x333333, 0x333333]} />
       <ambientLight />
       <directionalLight
-        position={[0, 1, 2]}
-        color="white"
+        position={[0, 5, -3]}
+        castShadow
+        intensity={2}
       />
-      {isBrowser && <SphereBrowser />}
+      {isBrowser && (
+        <>
+          <SphereBrowser />
+          <Text3D
+            receiveShadow
+            rotation={[Math.PI / 2, Math.PI, 0]}
+            position={[10, 0, 0.5]}
+            letterSpacing={-0.1}
+            size={1.2}
+            height={0.25}
+            bevelSize={0.01}
+            bevelSegments={10}
+            curveSegments={128}
+            bevelThickness={0.01}
+            lineHeight={0.8}
+            font={almarenaBold as any}>
+            LUDOVIC{'\n'}DEBEVER
+            <MeshTransmissionMaterial
+              backside={true}
+              backsideThickness={0.3}
+              samples={20}
+              resolution={1024}
+              transmission={0.95}
+              clearcoat={0.0}
+              clearcoatRoughness={0.0}
+              thickness={1}
+              chromaticAberration={5}
+              anisotropy={0.3}
+              roughness={0}
+              distortion={2}
+              distortionScale={0.5}
+              temporalDistortion={0}
+              ior={2}
+              color="#da9eff"
+              background={texture}
+            />
+          </Text3D>
+          <Text3D
+            rotation={[Math.PI / 2, Math.PI, 0]}
+            position={[9, 0, -2]}
+            height={0.001}
+            size={0.5}
+            font={almarenaLight as any}>
+            <meshPhongMaterial />
+            Software Engineer
+          </Text3D>
+        </>
+      )}
       {isMobile && <SphereMobile />}
     </Canvas>
   )
@@ -160,8 +219,7 @@ const SphereBrowser = () => {
   useFrame(({clock, raycaster, pointer, camera}) => {
     if (!mesh.current) return
 
-    camera.position.x = mousePosition.current.lerp(pointer, 0.03).x * 2
-    camera.position.y = 3 + mousePosition.current.lerp(pointer, 0.03).y * 2
+    camera.position.x = 3 + mousePosition.current.lerp(pointer, 0.03).x * 2
 
     camera.lookAt(3, 0, 0)
 
