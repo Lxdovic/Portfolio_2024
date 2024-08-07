@@ -1,6 +1,6 @@
 'use client'
 
-import {Canvas, useFrame} from '@react-three/fiber'
+import {Canvas, useFrame, useLoader} from '@react-three/fiber'
 import * as THREE from 'three'
 import {Vector2, Vector3} from 'three'
 import {useLayoutEffect, useMemo, useRef, useState} from 'react'
@@ -13,11 +13,7 @@ import almarenaLight from '@/assets/fonts/Almarena-Display-Light_Regular.json'
 import {MeshTransmissionMaterial, Text3D} from '@react-three/drei'
 import {RGBELoader} from 'three-stdlib'
 
-const SphereContainer = () => {
-  const texture = new RGBELoader().load(
-    'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr'
-  )
-
+const SceneContainer = () => {
   const grid = useRef<any>()
 
   useLayoutEffect(() => {
@@ -51,55 +47,8 @@ const SphereContainer = () => {
         }
       />
       <ambientLight intensity={2} />
-      {isBrowser && (
-        <>
-          <SphereBrowser />
-          <Text3D
-            receiveShadow
-            rotation={[Math.PI / 2, Math.PI, 0]}
-            position={[10, 0, 0.5]}
-            letterSpacing={-0.1}
-            size={1.2}
-            height={0.25}
-            bevelSize={0.01}
-            bevelSegments={10}
-            curveSegments={128}
-            bevelThickness={0.01}
-            lineHeight={0.8}
-            font={almarenaBold as any}>
-            LUDOVIC{'\n'}DEBEVER
-            <MeshTransmissionMaterial
-              backside={true}
-              backsideThickness={0.3}
-              samples={20}
-              resolution={1024}
-              transmission={0.95}
-              clearcoat={0.0}
-              clearcoatRoughness={0.0}
-              thickness={1}
-              chromaticAberration={5}
-              anisotropy={0.3}
-              roughness={0}
-              distortion={2}
-              distortionScale={0.5}
-              temporalDistortion={0}
-              ior={2}
-              color="#da9eff"
-              background={texture}
-            />
-          </Text3D>
-          <Text3D
-            rotation={[Math.PI / 2, Math.PI, 0]}
-            position={[9, 0, -2]}
-            height={0.001}
-            size={0.5}
-            font={almarenaLight as any}>
-            <meshPhongMaterial />
-            Software Engineer
-          </Text3D>
-        </>
-      )}
-      {isMobile && <SphereMobile />}
+      {isBrowser && <SceneBrowser />}
+      {isMobile && <SceneMobile />}
     </Canvas>
   )
 }
@@ -107,13 +56,19 @@ const SphereContainer = () => {
 const map = (value: number, x1: number, y1: number, x2: number, y2: number) =>
   ((value - x1) * (y2 - x2)) / (y1 - x1) + x2
 
-const SphereMobile = () => {
+const SceneMobile = () => {
   const mesh: any = useRef()
   const transparentMesh: any = useRef()
-  const geometry: any = useRef()
-  const positions: any = useRef([])
-  const colors: any = useRef([])
-  const target: any = useRef(new THREE.Vector3(0, 0, 0))
+
+  const uniforms = useMemo(
+    () => ({
+      uTime: {
+        value: 0.0,
+      },
+      uMouse: {value: new Vector3(0, 0, 0)},
+    }),
+    []
+  )
 
   const [orientation, setOrientation] = useState<any>()
   const onDeviceOrientation = (event: DeviceOrientationEvent) => {
@@ -134,11 +89,8 @@ const SphereMobile = () => {
     }
   }, [])
 
-  useFrame((state) => {
+  useFrame(({raycaster, pointer, camera, clock}) => {
     if (!mesh.current) return
-    if (!positions.current) return
-    if (!colors.current) return
-    if (!target.current) return
 
     const gammaRad = THREE.MathUtils.degToRad(
       map(orientation?.gamma - 30 || 0, -90, 90, 0, 360)
@@ -154,69 +106,46 @@ const SphereMobile = () => {
       cameraRadius * Math.sin(-gammaRad)
     )
 
-    state.camera.position.lerp(targetPosition, 0.05)
-    state.camera.lookAt(0, 0, 0)
-    state.raycaster.setFromCamera(state.pointer, state.camera)
-
-    const elapsed = state.clock.getElapsedTime()
-
-    const total = Math.PI * 20
-    const radius = 3
-
-    for (let i = 0; i < total; i++) {
-      let lon = map(i, 0, total, 0, Math.PI)
-      for (let j = 0; j < total; j++) {
-        const lat = map(j, 0, total, -Math.PI, Math.PI)
-        const animatedRadius = radius + Math.sin(lon * 15 + elapsed * 2) * 0.1
-        const animatedLat = lat + elapsed * 0.1
-
-        target.current.x =
-          animatedRadius * Math.sin(lon) * Math.cos(animatedLat)
-        target.current.y =
-          animatedRadius * Math.sin(lon) * Math.sin(animatedLat)
-        target.current.z = animatedRadius * Math.cos(lon)
-
-        const index = i * Math.round(total) + j
-        const position = new THREE.Vector3(
-          ...(positions.current[index] || [0, 0, 0])
-        )
-
-        const finalPos = position.lerp(target.current, 0.1)
-
-        positions.current[index] = [finalPos.x, finalPos.y, finalPos.z]
-      }
+    if (orientation) {
+      camera.position.lerp(targetPosition, 0.05)
     }
 
-    geometry.current.setAttribute(
-      'position',
-      new THREE.BufferAttribute(new Float32Array(positions.current.flat(1)), 3)
-    )
+    camera.lookAt(0, 0, 0)
+    raycaster.setFromCamera(pointer, camera)
+
+    mesh.current.material.uniforms.uTime.value = clock.getElapsedTime()
+    mesh.current.rotation.y = clock.getElapsedTime() * 0.2
   })
 
   return (
     <>
       <mesh ref={transparentMesh}>
-        <sphereGeometry args={[3.2, 100, 100]} />
+        <sphereGeometry args={[2, 100, 100]} />
         <meshBasicMaterial
           opacity={0}
           transparent
         />
       </mesh>
 
-      <points
-        ref={mesh}
-        type="Points">
-        <bufferGeometry ref={geometry} />
-        <pointsMaterial
-          color={'#7424FF'}
-          size={0.04}
+      <points ref={mesh}>
+        <sphereGeometry args={[2, 200, 200]} />
+        <shaderMaterial
+          fragmentShader={fragmentShader}
+          vertexShader={vertexShader}
+          uniforms={uniforms}
+          wireframe
         />
       </points>
     </>
   )
 }
 
-const SphereBrowser = () => {
+const SceneBrowser = () => {
+  const texture = useLoader(
+    RGBELoader,
+    'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr'
+  )
+
   const mesh = useRef<any>()
   const transparentMesh: any = useRef()
   const mousePosition = useRef(new Vector2())
@@ -256,6 +185,50 @@ const SphereBrowser = () => {
 
   return (
     <>
+      <Text3D
+        receiveShadow
+        rotation={[Math.PI / 2, Math.PI, 0]}
+        position={[10, 0, 0.5]}
+        letterSpacing={-0.1}
+        size={1.2}
+        height={0.25}
+        bevelSize={0.01}
+        bevelSegments={10}
+        curveSegments={128}
+        bevelThickness={0.01}
+        lineHeight={0.8}
+        font={almarenaBold as any}>
+        LUDOVIC{'\n'}DEBEVER
+        <MeshTransmissionMaterial
+          backside={true}
+          backsideThickness={0.3}
+          samples={20}
+          resolution={1024}
+          transmission={0.95}
+          clearcoat={0.0}
+          clearcoatRoughness={0.0}
+          thickness={1}
+          chromaticAberration={5}
+          anisotropy={0.3}
+          roughness={0}
+          distortion={2}
+          distortionScale={0.5}
+          temporalDistortion={0}
+          ior={2}
+          color="#da9eff"
+          background={texture}
+        />
+      </Text3D>
+      <Text3D
+        rotation={[Math.PI / 2, Math.PI, 0]}
+        position={[9, 0, -2]}
+        height={0.001}
+        size={0.5}
+        font={almarenaLight as any}>
+        <meshPhongMaterial />
+        Software Engineer
+      </Text3D>
+
       <mesh ref={transparentMesh}>
         <sphereGeometry args={[2, 100, 100]} />
         <meshBasicMaterial
@@ -277,4 +250,4 @@ const SphereBrowser = () => {
   )
 }
 
-export default SphereContainer
+export default SceneContainer
