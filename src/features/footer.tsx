@@ -90,7 +90,7 @@ const FooterMobile = () => {
 
 const FooterBrowser = () => {
   return (
-    <footer className="flex h-max justify-between gap-6 bg-foreground/5 p-10 xl:px-[20rem] 2xl:px-[26rem]">
+    <footer className="flex h-max justify-between gap-6 bg-background p-10 xl:px-[20rem] 2xl:px-[26rem]">
       <div className="flex h-max gap-6">
         <Image
           className="h-16 w-16 rounded-full"
