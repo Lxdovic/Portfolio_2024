@@ -127,18 +127,13 @@ void main() {
     vec3 dir = normalize(seg);
     float dist = length(seg);
 
+    if (dist < 1.){
+        newPosition += dir * (1. - dist) * 0.2;
+    }
+
     vec4 modelViewPosition = modelViewMatrix * vec4( newPosition, 1.0 );
     vec4 projectedPosition = projectionMatrix * modelViewPosition;
 
-    float d = 0.7;
-
-    if (dist < d) {
-        gl_PointSize = (4.0 + (d - dist) * 30.0) * ( 1.0 / - mvPosition.z );
-    }
-
-    else {
-        gl_PointSize = 4.0 * ( 1.0 / - mvPosition.z );
-    }
-
+    gl_PointSize = 6.5 * ( 1.0 / - mvPosition.z );
     gl_Position = projectedPosition;
 }
