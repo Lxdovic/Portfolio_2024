@@ -18,6 +18,14 @@ const SphereContainer = () => {
     'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr'
   )
 
+  const grid = useRef<any>()
+
+  useLayoutEffect(() => {
+    if (!grid.current) return
+
+    grid.current.computeLineDistances()
+  }, [])
+
   return (
     <Canvas
       shadows
@@ -25,17 +33,24 @@ const SphereContainer = () => {
         position: [-4, 6, -5],
         fov: 60,
       }}>
-      <fogExp2
-        attach="fog"
-        args={[0x09090b, 0.08]}
+      <fog
+        color={0x09090b}
+        near={5}
+        far={15}
+        attach={'fog'}
       />
-      <gridHelper args={[100, 200, 0x333333, 0x333333]} />
-      <ambientLight />
-      <directionalLight
-        position={[0, 5, -3]}
-        castShadow
-        intensity={2}
+      <gridHelper
+        ref={grid}
+        args={[100, 200]}
+        material={
+          new THREE.LineDashedMaterial({
+            dashSize: 0.05,
+            gapSize: 0.05,
+            color: 0x444444,
+          })
+        }
       />
+      <ambientLight intensity={2} />
       {isBrowser && (
         <>
           <SphereBrowser />

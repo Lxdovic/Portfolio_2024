@@ -130,7 +130,7 @@ void main() {
     vec4 modelViewPosition = modelViewMatrix * vec4( newPosition, 1.0 );
     vec4 projectedPosition = projectionMatrix * modelViewPosition;
 
-    float d = 0.5;
+    float d = 0.7;
 
     if (dist < d) {
         gl_PointSize = (4.0 + (d - dist) * 30.0) * ( 1.0 / - mvPosition.z );
