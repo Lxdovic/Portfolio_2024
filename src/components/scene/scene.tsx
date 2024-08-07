@@ -165,9 +165,9 @@ const SceneBrowser = () => {
   useFrame(({clock, raycaster, pointer, camera}) => {
     if (!mesh.current) return
 
-    camera.position.x = 3 + mousePosition.current.lerp(pointer, 0.03).x * 2
+    camera.position.x = mousePosition.current.lerp(pointer, 0.03).x * 2
 
-    camera.lookAt(3, 0, 0)
+    camera.lookAt(0, 0, 0)
 
     raycaster.setFromCamera(pointer, camera)
     const [intersection] = raycaster.intersectObject(transparentMesh.current)
@@ -179,6 +179,7 @@ const SceneBrowser = () => {
       mesh.current.material.uniforms.uMouse.value = new Vector3(0, 0, 0)
     } else {
       mesh.current.material.uniforms.uMouse.value = intersection.point
+        .sub(new Vector3(-4, 0, 0))
         .clone()
         .applyAxisAngle(new Vector3(0, 1, 0), -mesh.current.rotation.y)
         .applyAxisAngle(new Vector3(1, 0, 0), -mesh.current.rotation.x)
@@ -190,7 +191,7 @@ const SceneBrowser = () => {
       <Text3D
         receiveShadow
         rotation={[Math.PI / 2, Math.PI, 0]}
-        position={[10, 0, 0.5]}
+        position={[6, 0, 0.5]}
         letterSpacing={-0.1}
         size={1.2}
         height={0.25}
@@ -223,7 +224,7 @@ const SceneBrowser = () => {
       </Text3D>
       <Text3D
         rotation={[Math.PI / 2, Math.PI, 0]}
-        position={[9, 0, -2]}
+        position={[5, 0, -2]}
         height={0.001}
         size={0.5}
         font={almarenaLight as any}>
@@ -231,7 +232,9 @@ const SceneBrowser = () => {
         Software Engineer
       </Text3D>
 
-      <mesh ref={transparentMesh}>
+      <mesh
+        position={[-4, 0, 0]}
+        ref={transparentMesh}>
         <sphereGeometry args={[2, 100, 100]} />
         <meshBasicMaterial
           opacity={0}
@@ -239,7 +242,9 @@ const SceneBrowser = () => {
         />
       </mesh>
 
-      <points ref={mesh}>
+      <points
+        position={[-4, 0, 0]}
+        ref={mesh}>
         <icosahedronGeometry args={[2, 70]} />
         <shaderMaterial
           fragmentShader={fragmentShader}
