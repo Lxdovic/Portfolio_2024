@@ -128,7 +128,7 @@ const SceneMobile = () => {
       </mesh>
 
       <points ref={mesh}>
-        <sphereGeometry args={[2, 200, 200]} />
+        <icosahedronGeometry args={[2, 70]} />
         <shaderMaterial
           fragmentShader={fragmentShader}
           vertexShader={vertexShader}
@@ -240,7 +240,7 @@ const SceneBrowser = () => {
       </mesh>
 
       <points ref={mesh}>
-        <sphereGeometry args={[2, 200, 200]} />
+        <icosahedronGeometry args={[2, 70]} />
         <shaderMaterial
           fragmentShader={fragmentShader}
           vertexShader={vertexShader}
