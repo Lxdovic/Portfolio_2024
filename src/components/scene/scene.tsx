@@ -146,6 +146,8 @@ const SceneBrowser = () => {
     'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr'
   )
 
+  texture.offset.set(0.15, 0.2)
+
   const mesh = useRef<any>()
   const transparentMesh: any = useRef()
   const mousePosition = useRef(new Vector2())
@@ -201,20 +203,20 @@ const SceneBrowser = () => {
         LUDOVIC{'\n'}DEBEVER
         <MeshTransmissionMaterial
           backside={true}
-          backsideThickness={0.3}
-          samples={20}
-          resolution={1024}
-          transmission={0.95}
+          backsideThickness={0.5}
+          samples={10}
+          resolution={512}
+          transmission={0.92}
           clearcoat={0.0}
           clearcoatRoughness={0.0}
           thickness={1}
           chromaticAberration={5}
           anisotropy={0.3}
           roughness={0}
-          distortion={2}
-          distortionScale={0.5}
-          temporalDistortion={0}
-          ior={2}
+          distortion={3}
+          distortionScale={0.6}
+          temporalDistortion={0.05}
+          ior={1.5}
           color="#da9eff"
           background={texture}
         />
