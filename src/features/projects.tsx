@@ -164,10 +164,8 @@ const ProjectsBrowser = () => {
       </h1>
 
       <GridPattern
-        width={30}
-        height={30}
-        x={-1}
-        y={-1}
+        width={50}
+        height={50}
         strokeDasharray={'5 5'}
         className={cn(
           '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]'
