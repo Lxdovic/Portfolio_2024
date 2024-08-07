@@ -218,7 +218,7 @@ const SceneBrowser = () => {
           distortionScale={0.6}
           temporalDistortion={0.05}
           ior={1.5}
-          color="#da9eff"
+          color="#c175ff"
           background={texture}
         />
       </Text3D>
