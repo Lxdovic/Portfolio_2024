@@ -4,8 +4,11 @@ import AnimatedShinyText from '@/components/animated-shiny-text'
 import {ArrowRightIcon} from 'lucide-react'
 import Link from 'next/link'
 import {AuroraBackground} from '@/components/aurora-bg'
+import {isMobile} from 'react-device-detect'
 
-const KnightScene = lazy(() => import('@/components/scene/knight-scene'))
+const KnightScene = isMobile
+  ? null
+  : lazy(() => import('@/components/scene/knight-scene'))
 
 export const Hero = () => {
   // const t = useTranslations('landing')
@@ -15,7 +18,7 @@ export const Hero = () => {
       className="relative h-screen"
       id="home">
       <div className="container flex size-full flex-col justify-center gap-10">
-        <KnightScene />
+        {!isMobile && KnightScene !== null && <KnightScene />}
 
         <div className="flex w-max flex-col self-center text-4xl text-white mix-blend-difference sm:text-7xl md:text-8xl lg:text-9xl">
           <h1 className="flex w-full gap-4">Ludovic Debever</h1>
