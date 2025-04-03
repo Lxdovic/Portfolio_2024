@@ -23,10 +23,11 @@ const config = {
       transitionTimingFunction: {
         'linear-out': 'cubic-bezier(.17,.33,.51,1)',
       },
+      fontFamily: {
+        sans: ['var(--font-sans)', ...fontFamily.sans] as any,
+        serif: ['var(--font-libre-calson)'] as any,
+      },
       colors: {
-        fontFamily: {
-          sans: ['var(--font-sans)', ...fontFamily.sans] as any,
-        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -67,6 +68,14 @@ const config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       keyframes: {
+        aurora: {
+          from: {
+            backgroundPosition: '50% 50%, 50% 50%',
+          },
+          to: {
+            backgroundPosition: '350% 50%, 350% 50%',
+          },
+        },
         'radar-spin': {
           from: {
             transform: 'rotate(20deg)',
@@ -93,6 +102,7 @@ const config = {
         },
       },
       animation: {
+        aurora: 'aurora 60s linear infinite',
         'radar-spin': 'radar-spin 10s linear infinite',
         'meteor-effect': 'meteor 5s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
