@@ -27,9 +27,9 @@ export const Hero = () => {
 
           <div className="flex w-full flex-col gap-10 self-center text-justify sm:w-[555px] md:w-[740px] lg:w-[985px] lg:text-left">
             <p className="w-full text-xl leading-relaxed tracking-wide text-white mix-blend-difference">
-              I'm a student software architect based in Paris. I'm passionate
-              about any kind of software development and I love learning new
-              things.
+              I&apos;m a student software architect based in Paris. I&apos;m
+              passionate about any kind of software development and I love
+              learning new things.
             </p>
 
             <div className="group w-max rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800">
