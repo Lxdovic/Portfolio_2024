@@ -1,16 +1,16 @@
 'use client'
 
-import { Environment } from '@react-three/drei'
-import { Canvas, useFrame, useLoader } from '@react-three/fiber'
+import {Environment} from '@react-three/drei'
+import {Canvas, useFrame, useLoader} from '@react-three/fiber'
 import * as THREE from 'three'
-import { GLTFLoader } from 'three-stdlib'
-import { useTheme } from 'next-themes'
-import { useEffect, useRef, useState } from 'react'
+import {GLTFLoader} from 'three-stdlib'
+import {useTheme} from 'next-themes'
+import {useEffect, useRef, useState} from 'react'
 
 export default function KnightScene() {
   return (
-    <div className="w-full absolute -z-20 h-full top-0 left-0">
-      <Canvas camera={{ position: [-0.55, 0, 0], fov: 35 }}>
+    <div className="absolute left-0 top-0 -z-20 h-full w-full">
+      <Canvas camera={{position: [-0.55, 0, 0], fov: 35}}>
         <Knight />
         <Environment preset="dawn" />
       </Canvas>
@@ -23,8 +23,8 @@ const Knight = () => {
   const pawn = useLoader(GLTFLoader, '/chess_pawn.glb')
   const king = useLoader(GLTFLoader, '/chess_king.glb')
   const light = useRef<THREE.PointLight>(null)
-  const [cursor, setCursor] = useState({ x: 0, y: 0 })
-  const { theme } = useTheme()
+  const [cursor, setCursor] = useState({x: 0, y: 0})
+  const {theme} = useTheme()
 
   const ease = (current: number, target: number, factor: number) => {
     return current + ((target - current) * factor) / 4
@@ -56,15 +56,24 @@ const Knight = () => {
     king.scene.rotation.y = ease(king.scene.rotation.y, targetKingY, 0.1)
 
     light.current.position.x = 0.1
-    light.current.position.y = ease(light.current.position.y, cursor.y / 20, 0.1)
+    light.current.position.y = ease(
+      light.current.position.y,
+      cursor.y / 20,
+      0.1
+    )
     light.current.position.z = ease(light.current.position.z, cursor.x / 5, 0.1)
 
     state.camera.position.y = ease(state.camera.position.y, -cursor.y / 30, 0.1)
     state.camera.position.z = ease(state.camera.position.z, cursor.x / 30, 0.1)
-    state.camera.lookAt(0, state.camera.position.y / 2, state.camera.position.z / 2)
+    state.camera.lookAt(
+      0,
+      state.camera.position.y / 2,
+      state.camera.position.z / 2
+    )
   })
 
   useEffect(() => {
+    // @ts-ignore
     knight.scene.traverse((child: THREE.Mesh) => {
       if (child.isMesh) {
         child.material = new THREE.MeshStandardMaterial({
@@ -75,6 +84,7 @@ const Knight = () => {
       }
     })
 
+    // @ts-ignore
     pawn.scene.traverse((child: THREE.Mesh) => {
       if (child.isMesh) {
         child.material = new THREE.MeshStandardMaterial({
@@ -85,6 +95,7 @@ const Knight = () => {
       }
     })
 
+    // @ts-ignore
     king.scene.traverse((child: THREE.Mesh) => {
       if (child.isMesh) {
         child.material = new THREE.MeshStandardMaterial({
@@ -125,7 +136,12 @@ const Knight = () => {
       <primitive object={knight.scene} />
       <primitive object={king.scene} />
       <primitive object={pawn.scene} />
-      <pointLight ref={light} color="hotpink" intensity={1} decay={10} />
+      <pointLight
+        ref={light}
+        color="hotpink"
+        intensity={1}
+        decay={10}
+      />
     </>
   )
 }
