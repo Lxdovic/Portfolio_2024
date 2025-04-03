@@ -32,7 +32,7 @@ const About = () => {
   return (
     <section
       id="about"
-      className="relative border-b">
+      className="relative border-b bg-background">
       <Meteors
         number={isMobile ? 0 : 60}
         className="z-0"

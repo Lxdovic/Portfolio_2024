@@ -151,7 +151,7 @@ const ProjectsBrowser = () => {
       animate={{opacity: 1}}
       exit={{opacity: 0}}
       transition={{duration: 3}}
-      className="relative flex h-max min-h-screen flex-col items-center overflow-hidden bg-background pb-40">
+      className="relative flex h-max min-h-screen flex-col items-center overflow-hidden bg-background/50 pb-40">
       <h1 className="z-10 flex flex-col py-10 pt-32 text-[3rem] font-bold font-bold uppercase leading-[3rem] text-white sm:w-[28rem] sm:text-7xl lg:w-[36rem]  lg:text-8xl">
         <AnimatedText className="text-start text-primary">
           Selected
