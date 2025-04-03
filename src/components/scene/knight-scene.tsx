@@ -1,5 +1,6 @@
 'use client'
 
+import {useLoadStore} from '@/store/load'
 import {Environment} from '@react-three/drei'
 import {Canvas, useFrame, useLoader} from '@react-three/fiber'
 import * as THREE from 'three'
@@ -22,6 +23,12 @@ const Knight = () => {
   const knight = useLoader(GLTFLoader, '/chess_knight.glb')
   const pawn = useLoader(GLTFLoader, '/chess_pawn.glb')
   const king = useLoader(GLTFLoader, '/chess_king.glb')
+  const {isLoading, setIsLoading} = useLoadStore()
+
+  if (isLoading && knight && king && pawn) {
+    setIsLoading(false)
+  }
+
   const light = useRef<THREE.PointLight>(null)
   const [cursor, setCursor] = useState({x: 0, y: 0})
   const {theme} = useTheme()
