@@ -5,13 +5,18 @@ import {ArrowRightIcon} from 'lucide-react'
 import Link from 'next/link'
 import {AuroraBackground} from '@/components/aurora-bg'
 import {isMobile} from 'react-device-detect'
+import {useLoadStore} from '@/store/load'
 
 const KnightScene = isMobile
   ? null
   : lazy(() => import('@/components/scene/knight-scene'))
 
 export const Hero = () => {
+  const {isLoading, setIsLoading} = useLoadStore()
   // const t = useTranslations('landing')
+  if (isLoading && KnightScene === null) {
+    setIsLoading(false)
+  }
 
   return (
     <section
